@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> حاسبة الطعام</title>
+    <title>حاسبة الطعام</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,20 +22,20 @@
         }
 
         .container {
-            max-width: 100%; /* يجعل المحتوى بحجم الشاشة */
+            max-width: 100%;
             margin: 0 auto;
             text-align: center;
         }
 
         input[type="text"], input[type="number"] {
-            width: 30%;
+            width: 90%;
             padding: 8px;
             margin: 5px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
             text-align: center;
-            font-size: 12px;
+            font-size: 9px;
         }
 
         button {
@@ -71,6 +71,16 @@
             background-color: #cc8400;
         }
 
+        button.reset-btn {
+            background-color: red;
+            font-size: 12px;
+            padding: 8px 12px;
+        }
+
+        button.reset-btn:hover {
+            background-color: #d93434;
+        }
+
         table {
             width: 100%;
             margin: 15px 0;
@@ -93,10 +103,14 @@
             color: white;
         }
 
+        td {
+            font-size: 12px; /* تنسيق حجم النص ليكون مرئيًا بشكل أفضل */
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
-            display: none; /* إخفاء قائمة البحث في البداية */
+            display: none;
         }
 
         ul li {
@@ -115,11 +129,11 @@
         .totals-row {
             font-weight: bold;
             background-color: #f0f0f5;
-            color: red; /* تغيير لون المجموع إلى الأحمر */
+            color: red;
         }
 
         .notes {
-            display: none; /* إخفاء الملاحظات في البداية */
+            display: none;
             margin: 10px 0;
             background-color: #f9f9f9;
             padding: 10px;
@@ -130,10 +144,10 @@
         .toggle-notes {
             cursor: pointer;
             color: #4CAF50;
-            text-align: center; /* ملاحظات تكون في الوسط */
+            text-align: center;
             font-size: 14px;
-            text-decoration: underline; /* وضع خط تحت كلمة ملاحظات */
-            color: red; /* تغيير لون النص إلى الأحمر */
+            text-decoration: underline;
+            color: red;
         }
     </style>
 </head>
@@ -143,8 +157,32 @@
     <h1>برنامج حساب الطعام</h1>
     <p style="color: blue;">(اعداد حسام الحديدي)</p>
 
+    <!-- جدول إدخال الحدود -->
+    <h3>أدخل احتياجك من الأرقام</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>السعرات</th>
+            <th>البروتين</th>
+            <th>الكارب</th>
+            <th>الدهون</th>
+            <th>الألياف</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="number" id="calorieLimit" placeholder="السعرات" min="0"></td>
+            <td><input type="number" id="proteinLimit" placeholder="البروتين" min="0"></td>
+            <td><input type="number" id="carbLimit" placeholder="الكارب" min="0"></td>
+            <td><input type="number" id="fatLimit" placeholder="الدهون" min="0"></td>
+            <td><input type="number" id="fiberLimit" placeholder="الألياف" min="0"></td>
+        </tr>
+        </tbody>
+    </table>
+    <button class="reset-btn" onclick="resetLimits()">تصفير الاحتياج</button> <!-- زر لتصفير الاحتياج -->
+
     <!-- البحث عن الطعام -->
-    <h3>اختار اسم الطعام واكتب بجانبه الكمية بالغرام</h3>
+    <h3>اختار اسم الطعام واكتب تحته الكمية بالغرام</h3>
     <input type="text" id="search" placeholder="اكتب اسم الطعام" oninput="searchFood()">
     <input type="number" id="quantity" value="100" min="1" style="width: 20%;"> <!-- خانة الكمية -->
     <button onclick="addFood()">إدخال</button> <!-- زر إدخال -->
@@ -206,7 +244,6 @@
         const searchValue = document.getElementById('search').value.toLowerCase();
         const searchResults = document.getElementById('searchResults');
         
-        // مسح النتائج إذا كانت خانة البحث فارغة
         if (searchValue === '') {
             searchResults.style.display = 'none';
             searchResults.innerHTML = '';
@@ -216,37 +253,38 @@
         const filteredFoods = foods.filter(food => food.name.includes(searchValue));
         searchResults.innerHTML = '';
 
-        if (filteredFoods.length > 0) {
-            searchResults.style.display = 'block';
-            filteredFoods.forEach(food => {
-                const li = document.createElement('li');
-                li.textContent = food.name;
-                li.onclick = () => selectFood(food);
-                searchResults.appendChild(li);
-            });
-        } else {
-            searchResults.style.display = 'none';
-        }
-    }
+        filteredFoods.forEach(food => {
+            const li = document.createElement('li');
+            li.textContent = food.name;
+            li.onclick = function () {
+                document.getElementById('search').value = food.name;
+                searchResults.innerHTML = '';
+                searchResults.style.display = 'none';
+            };
+            searchResults.appendChild(li);
+        });
 
-    function selectFood(food) {
-        document.getElementById('search').value = food.name; // تعيين اسم الطعام في خانة البحث
-        document.getElementById('searchResults').style.display = 'none'; // إخفاء نتائج البحث
+        searchResults.style.display = 'block';
     }
 
     function addFood() {
         const foodName = document.getElementById('search').value;
-        const quantity = parseFloat(document.getElementById('quantity').value) || 100; // الحصول على الكمية
+        const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+
+        if (!foodName || quantity <= 0) {
+            alert('يرجى إدخال اسم الطعام وكمية صحيحة.');
+            return;
+        }
 
         const food = foods.find(f => f.name === foodName);
-        if (food) {
-            selectedFoods.push({ food, quantity });
-            updateTable();
-            document.getElementById('search').value = ''; // مسح خانة البحث
-            document.getElementById('quantity').value = 100; // إعادة الكمية إلى 100
-        } else {
-            alert('الطعام غير موجود في القائمة.');
+        
+        if (!food) {
+            alert('الطعام غير موجود.');
+            return;
         }
+
+        selectedFoods.push({ food, quantity });
+        updateTable();
     }
 
     function updateTable() {
@@ -274,7 +312,6 @@
             `;
             tbody.appendChild(row);
 
-            // إضافة القيم للمجموع
             totalCalories += food.calories * quantity / 100;
             totalProtein += food.protein * quantity / 100;
             totalCarbs += food.carbs * quantity / 100;
@@ -289,10 +326,12 @@
         document.getElementById('totalFats').textContent = totalFats.toFixed(2);
         document.getElementById('totalFiber').textContent = totalFiber.toFixed(2);
         document.getElementById('totalWeight').textContent = totalWeight;
+
+        checkLimits(); // استدعاء دالة التحقق
     }
 
-    function removeFood(foodName) {
-        selectedFoods = selectedFoods.filter(item => item.food.name !== foodName);
+    function removeFood(name) {
+        selectedFoods = selectedFoods.filter(item => item.food.name !== name);
         updateTable();
     }
 
@@ -303,9 +342,56 @@
 
     function toggleNotes() {
         const notes = document.getElementById('notes');
-        notes.style.display = notes.style.display === 'none' ? 'block' : 'none';
-        document.getElementById('notesArrow').innerHTML = notes.style.display === 'none' ? '&#x25BC;' : '&#x25B2;'; // تغيير السهم
+        const notesArrow = document.getElementById('notesArrow');
+        if (notes.style.display === 'none') {
+            notes.style.display = 'block';
+            notesArrow.innerHTML = '&#x25B2;';
+        } else {
+            notes.style.display = 'none';
+            notesArrow.innerHTML = '&#x25BC;';
+        }
+    }
+
+    // دالة التحقق من تجاوز الحدود
+    function checkLimits() {
+        const calorieLimit = parseFloat(document.getElementById('calorieLimit').value) || Infinity;
+        const proteinLimit = parseFloat(document.getElementById('proteinLimit').value) || Infinity;
+        const carbLimit = parseFloat(document.getElementById('carbLimit').value) || Infinity;
+        const fatLimit = parseFloat(document.getElementById('fatLimit').value) || Infinity;
+        const fiberLimit = parseFloat(document.getElementById('fiberLimit').value) || Infinity;
+
+        const totalCalories = parseFloat(document.getElementById('totalCalories').textContent);
+        const totalProtein = parseFloat(document.getElementById('totalProtein').textContent);
+        const totalCarbs = parseFloat(document.getElementById('totalCarbs').textContent);
+        const totalFats = parseFloat(document.getElementById('totalFats').textContent);
+        const totalFiber = parseFloat(document.getElementById('totalFiber').textContent);
+
+        if (totalCalories > calorieLimit) {
+            alert('لقد تجاوزت عدد السعرات المطلوب.');
+        } 
+        if (totalProtein > proteinLimit) {
+            alert('لقد تجاوزت غرامات البروتين المطلوب.');
+        } 
+        if (totalCarbs > carbLimit) {
+            alert('لقد تجاوزت عدد الكارب المطلوب.');
+        } 
+        if (totalFats > fatLimit) {
+            alert('لقد تجاوزت عدد الدهون المطلوب.');
+        } 
+        if (totalFiber > fiberLimit) {
+            alert('لقد تجاوزت عدد الألياف المطلوب.');
+        }
+    }
+
+    // دالة لتصفير الاحتياج
+    function resetLimits() {
+        document.getElementById('calorieLimit').value = '';
+        document.getElementById('proteinLimit').value = '';
+        document.getElementById('carbLimit').value = '';
+        document.getElementById('fatLimit').value = '';
+        document.getElementById('fiberLimit').value = '';
     }
 </script>
+
 </body>
 </html>
