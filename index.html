@@ -229,16 +229,67 @@
 <script>
     let selectedFoods = [];
 
-    const foods = [
-        { name: 'تفاح', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4 },
-        { name: 'موز', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6 },
-        { name: 'دجاج', calories: 239, protein: 27, carbs: 0, fats: 14, fiber: 0 },
-        { name: 'رز', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
-        { name: 'لحم بقر', calories: 250, protein: 26, carbs: 0, fats: 17, fiber: 0 },
-        { name: 'سمك', calories: 206, protein: 22, carbs: 0, fats: 12, fiber: 0 },
-        { name: 'زبادي', calories: 61, protein: 3.5, carbs: 4.7, fats: 3.3, fiber: 0 },
-        // أضف المزيد من الأطعمة هنا
-    ];
+    const foods =[
+    // فواكه
+    { name: 'موز', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6 },
+    { name: 'تفاح', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4 },
+    { name: 'برتقال', calories: 47, protein: 0.9, carbs: 12, fats: 0.1, fiber: 2.4 },
+    { name: 'عنب', calories: 69, protein: 0.6, carbs: 18, fats: 0.2, fiber: 0.9 },
+    { name: 'فراولة', calories: 32, protein: 0.7, carbs: 7.7, fats: 0.3, fiber: 2.0 },
+    { name: 'كيوي', calories: 61, protein: 1.1, carbs: 15, fats: 0.5, fiber: 3.0 },
+    { name: 'أناناس', calories: 50, protein: 0.5, carbs: 13, fats: 0.1, fiber: 1.4 },
+    { name: 'خوخ', calories: 39, protein: 0.9, carbs: 10, fats: 0.3, fiber: 1.5 },
+    { name: 'جريب فروت', calories: 42, protein: 0.8, carbs: 11, fats: 0.1, fiber: 1.4 },
+    { name: 'مشمش', calories: 48, protein: 1.4, carbs: 12, fats: 0.1, fiber: 2.0 },
+    { name: 'تين', calories: 74, protein: 0.8, carbs: 19, fats: 0.3, fiber: 2.9 },
+    { name: 'رمان', calories: 83, protein: 1.7, carbs: 19, fats: 1.2, fiber: 4.0 },
+    { name: 'بطيخ', calories: 30, protein: 0.6, carbs: 8, fats: 0.2, fiber: 0.4 },
+    { name: 'يوسفي', calories: 53, protein: 0.8, carbs: 13, fats: 0.3, fiber: 1.8 },
+    { name: 'بلوبيري', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4 },
+    { name: 'روز بيري', calories: 57, protein: 1.2, carbs: 14, fats: 0.3, fiber: 6.5 },
+
+    // خضروات
+    { name: 'خس', calories: 15, protein: 1.4, carbs: 2.9, fats: 0.2, fiber: 1.3 },
+    { name: 'طماطم', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2 },
+    { name: 'خيار', calories: 16, protein: 0.7, carbs: 3.6, fats: 0.1, fiber: 0.5 },
+    { name: 'جزر', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 2.8 },
+    { name: 'بطاطس مسلوقة', calories: 87, protein: 2, carbs: 20, fats: 0.1, fiber: 1.8 },
+    { name: 'بروكلي', calories: 34, protein: 2.8, carbs: 7, fats: 0.4, fiber: 2.6 },
+    { name: 'سبانخ', calories: 23, protein: 2.9, carbs: 3.6, fats: 0.4, fiber: 2.2 },
+    { name: 'قرنبيط', calories: 25, protein: 1.9, carbs: 5, fats: 0.3, fiber: 2.0 },
+    { name: 'فلفل رومي', calories: 31, protein: 1, carbs: 6, fats: 0.3, fiber: 2.1 },
+    { name: 'فطر', calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, fiber: 1.0 },
+    { name: 'باذنجان', calories: 25, protein: 0.98, carbs: 5.9, fats: 0.2, fiber: 3.0 },
+    { name: 'بطاطا حلوة', calories: 86, protein: 1.6, carbs: 20, fats: 0.1, fiber: 3.0 },
+    { name: 'كوسا', calories: 17, protein: 1.2, carbs: 3.1, fats: 0.2, fiber: 1.0 },
+
+    // بقوليات
+    { name: 'عدس مطبوخ', calories: 116, protein: 9, carbs: 20, fats: 0.4, fiber: 7.9 },
+    { name: 'حمص مطبوخ', calories: 164, protein: 8.9, carbs: 27, fats: 2.6, fiber: 7.6 },
+    { name: 'فاصولياء مطبوخة', calories: 127, protein: 8.7, carbs: 23, fats: 0.5, fiber: 6.4 },
+    { name: 'بازلاء مطبوخة', calories: 81, protein: 5.4, carbs: 14, fats: 0.4, fiber: 5.7 },
+    { name: 'فول مطبوخ', calories: 127, protein: 8.3, carbs: 22, fats: 0.6, fiber: 9.4 },
+    { name: 'طحينية', calories: 595, protein: 17, carbs: 20, fats: 53, fiber: 8.0 },
+
+    // زيوت
+    { name: 'زيت زيتون', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+    { name: 'زيت عباد الشمس', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+    { name: 'زيت جوز الهند', calories: 892, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+    { name: 'زيت الذرة', calories: 900, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+    { name: 'زيت الكانولا', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+    { name: 'زيت السمسم', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+    { name: 'زيت الفول السوداني', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
+
+    // نشويات
+    { name: 'أرز مسلوق', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
+    { name: 'مكرونة مسلوقة', calories: 158, protein: 5.8, carbs: 31, fats: 0.9, fiber: 1.8 },
+    { name: 'خبز أبيض', calories: 265, protein: 9, carbs: 49, fats: 3.2, fiber: 2.7 },
+    { name: 'خبز أسمر', calories: 247, protein: 9, carbs: 43, fats: 3.3, fiber: 7.0 },
+    { name: 'خبز الشوفان', calories: 247, protein: 9, carbs: 42, fats: 4.2, fiber: 8.0 },
+    { name: 'خبز اللوز', calories: 535, protein: 21, carbs: 20, fats: 47, fiber: 12.5 },
+    { name: 'خبز الشعير', calories: 250, protein: 9, carbs: 45, fats: 2.5, fiber: 8.0 },
+    { name: 'خبز الذرة', calories: 321, protein: 9.2, carbs: 72, fats: 4.3, fiber: 7.3 },
+];
 
     function searchFood() {
         const searchValue = document.getElementById('search').value.toLowerCase();
