@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>برنامج حساب الطعام</title>
+    <link rel="icon" href="Cal.png" type="image/png"> <!-- إضافة الأيقونة -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background-color: #f0f0f5;
+            color: #333;
+            padding: 10px;
+            margin: 0;
+            font-size: 12px;
+        }
+
+        h1, h3 {
+            color: #4CAF50;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .container {
+            max-width: 100%; /* يجعل المحتوى بحجم الشاشة */
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 90%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        button {
+            padding: 6px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+            margin: 3px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button.clear-btn {
+            background-color: red;
+            font-size: 10px;
+        }
+
+        button.clear-btn:hover {
+            background-color: #d93434;
+        }
+
+        button.remove-btn {
+            background-color: orange;
+            font-size: 10px;
+        }
+
+        button.remove-btn:hover {
+            background-color: #cc8400;
+        }
+
+        table {
+            width: 100%;
+            margin: 15px 0;
+            border-collapse: collapse;
+            background-color: white;
+            font-size: 12px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 6px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: none; /* إخفاء قائمة البحث في البداية */
+        }
+
+        ul li {
+            background-color: #f9f9f9;
+            margin: 3px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul li:hover {
+            background-color: #e0e0e0;
+        }
+
+        .totals-row {
+            font-weight: bold;
+            background-color: #f0f0f5;
+            color: red; /* تغيير لون المجموع إلى الأحمر */
+        }
+
+        .notes {
+            display: none; /* إخفاء الملاحظات في البداية */
+            margin: 10px 0;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .toggle-notes {
+            cursor: pointer;
+            color: #4CAF50;
+            text-align: center; /* ملاحظات تكون في الوسط */
+            font-size: 14px;
+            text-decoration: underline; /* وضع خط تحت كلمة ملاحظات */
+            color: red; /* تغيير لون النص إلى الأحمر */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>برنامج حساب الطعام</h1>
+    <p style="color: blue;">(اعداد حسام الحديدي)</p>
+
+    <!-- البحث عن الطعام -->
+    <h3>اكتب اسم الطعام</h3>
+    <input type="text" id="search" placeholder="اكتب اسم الطعام" oninput="searchFood()">
+    <ul id="searchResults"></ul>
+
+    <!-- جدول الطعام المختار -->
+    <h3>قائمة الأطعمة المختارة</h3>
+    <table id="selectedFoodTable">
+        <thead>
+        <tr>
+            <th>اسم الطعام</th>
+            <th>الكمية (غرام)</th>
+            <th>السعرات الحرارية</th>
+            <th>البروتين</th>
+            <th>الكارب</th>
+            <th>الدهون</th>
+            <th>الألياف</th>
+            <th>إزالة</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+        <tr class="totals-row">
+            <td>المجموع</td>
+            <td id="totalWeight">0</td>
+            <td id="totalCalories">0</td>
+            <td id="totalProtein">0</td>
+            <td id="totalCarbs">0</td>
+            <td id="totalFats">0</td>
+            <td id="totalFiber">0</td>
+            <td><button class="clear-btn" onclick="clearTable()">تصفير القائمة</button></td>
+        </tr>
+    </table>
+
+    <!-- ملاحظات -->
+    <div class="toggle-notes" onclick="toggleNotes()">
+        <span id="notesArrow">&#x25BC;</span> ملاحظات
+    </div>
+    <div class="notes" id="notes">
+        <p>• التمرة الواحدة تقريباً 30-35 غم</p>
+        <p>• احسب كل شيء فهنالك أطعمة صغيرة الحجم وكثيرة السعرات.</p>
+    </div>
+</div>
+
+<script>
+    let selectedFoods = [];
+
+    const foods = [
+        { name: 'تفاح', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4 },
+        { name: 'موز', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6 },
+        { name: 'دجاج', calories: 239, protein: 27, carbs: 0, fats: 14, fiber: 0 },
+        { name: 'رز', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
+        { name: 'لحم بقر', calories: 250, protein: 26, carbs: 0, fats: 17, fiber: 0 },
+        { name: 'سمك', calories: 206, protein: 22, carbs: 0, fats: 12, fiber: 0 },
+        { name: 'زبادي', calories: 61, protein: 3.5, carbs: 4.7, fats: 3.3, fiber: 0 },
+        // أضف المزيد من الأطعمة هنا
+    ];
+
+    function searchFood() {
+        const searchValue = document.getElementById('search').value.toLowerCase();
+        const searchResults = document.getElementById('searchResults');
+        
+        // مسح النتائج إذا كانت خانة البحث فارغة
+        if (searchValue === '') {
+            searchResults.style.display = 'none';
+            searchResults.innerHTML = '';
+            return;
+        }
+
+        const filteredFoods = foods.filter(food => food.name.includes(searchValue));
+        searchResults.innerHTML = '';
+
+        if (filteredFoods.length > 0) {
+            searchResults.style.display = 'block';
+            filteredFoods.forEach(food => {
+                const li = document.createElement('li');
+                li.textContent = food.name;
+                li.onclick = () => selectFood(food);
+                searchResults.appendChild(li);
+            });
+        } else {
+            searchResults.style.display = 'none';
+        }
+    }
+
+    function selectFood(food) {
+        const quantity = prompt(`ادخل كمية ${food.name} (غم):`, 100); // طلب الكمية مع القيمة الافتراضية 100
+        const quantityNum = parseFloat(quantity) || 100; // استخدام 100 إذا لم يتم إدخال رقم
+
+        selectedFoods.push({ food, quantity: quantityNum });
+        updateTable();
+        document.getElementById('searchResults').style.display = 'none'; // إخفاء نتائج البحث
+        document.getElementById('search').value = ''; // مسح خانة البحث
+    }
+
+    function updateTable() {
+        const tbody = document.querySelector('#selectedFoodTable tbody');
+        tbody.innerHTML = '';
+
+        let totalWeight = 0;
+        let totalCalories = 0;
+        let totalProtein = 0;
+        let totalCarbs = 0;
+        let totalFats = 0;
+        let totalFiber = 0;
+
+        selectedFoods.forEach(({ food, quantity }, index) => {
+            const tr = document.createElement('tr');
+
+            // حساب القيم الغذائية بناءً على الكمية المدخلة
+            const foodCalories = food.calories * (quantity / 100);
+            const foodProtein = food.protein * (quantity / 100);
+            const foodCarbs = food.carbs * (quantity / 100);
+            const foodFats = food.fats * (quantity / 100);
+            const foodFiber = food.fiber * (quantity / 100);
+
+            tr.innerHTML = `
+                <td>${food.name}</td>
+                <td>${quantity}</td>
+                <td>${foodCalories.toFixed(2)}</td>
+                <td>${foodProtein.toFixed(2)}</td>
+                <td>${foodCarbs.toFixed(2)}</td>
+                <td>${foodFats.toFixed(2)}</td>
+                <td>${foodFiber.toFixed(2)}</td>
+                <td><button class="remove-btn" onclick="removeFood(${index})">إزالة</button></td>
+            `;
+            tbody.appendChild(tr);
+
+            // جمع القيم
+            totalWeight += quantity;
+            totalCalories += foodCalories;
+            totalProtein += foodProtein;
+            totalCarbs += foodCarbs;
+            totalFats += foodFats;
+            totalFiber += foodFiber;
+        });
+
+        // تحديث المجموع
+        document.getElementById('totalWeight').textContent = totalWeight;
+        document.getElementById('totalCalories').textContent = totalCalories.toFixed(2);
+        document.getElementById('totalProtein').textContent = totalProtein.toFixed(2);
+        document.getElementById('totalCarbs').textContent = totalCarbs.toFixed(2);
+        document.getElementById('totalFats').textContent = totalFats.toFixed(2);
+        document.getElementById('totalFiber').textContent = totalFiber.toFixed(2);
+    }
+
+    function removeFood(index) {
+        selectedFoods.splice(index, 1); // إزالة العنصر المحدد
+        updateTable();
+    }
+
+    function clearTable() {
+        selectedFoods = []; // تفريغ القائمة
+        updateTable();
+    }
+
+    function toggleNotes() {
+        const notes = document.getElementById('notes');
+        notes.style.display = notes.style.display === 'none' ? 'block' : 'none';
+        const notesArrow = document.getElementById('notesArrow');
+        notesArrow.innerHTML = notes.style.display === 'none' ? '&#x25BC;' : '&#x25B2;'; // تغيير السهم
+    }
+</script>
+
+</body>
+</html>
