@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>برنامج حساب الطعام</title>
-    <link rel="icon" href="Cal.png" type="image/png"> <!-- إضافة الأيقونة -->
+    <title> حاسبة الطعام</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,7 +28,7 @@
         }
 
         input[type="text"], input[type="number"] {
-            width: 90%;
+            width: 30%;
             padding: 8px;
             margin: 5px 0;
             border: 1px solid #ccc;
@@ -145,8 +144,10 @@
     <p style="color: blue;">(اعداد حسام الحديدي)</p>
 
     <!-- البحث عن الطعام -->
-    <h3>اكتب اسم الطعام</h3>
+    <h3>اختار اسم الطعام واكتب بجانبه الكمية بالغرام</h3>
     <input type="text" id="search" placeholder="اكتب اسم الطعام" oninput="searchFood()">
+    <input type="number" id="quantity" value="100" min="1" style="width: 20%;"> <!-- خانة الكمية -->
+    <button onclick="addFood()">إدخال</button> <!-- زر إدخال -->
     <ul id="searchResults"></ul>
 
     <!-- جدول الطعام المختار -->
@@ -229,83 +230,82 @@
     }
 
     function selectFood(food) {
-        const quantity = prompt(`ادخل كمية ${food.name} (غم):`, 100); // طلب الكمية مع القيمة الافتراضية 100
-        const quantityNum = parseFloat(quantity) || 100; // استخدام 100 إذا لم يتم إدخال رقم
-
-        selectedFoods.push({ food, quantity: quantityNum });
-        updateTable();
+        document.getElementById('search').value = food.name; // تعيين اسم الطعام في خانة البحث
         document.getElementById('searchResults').style.display = 'none'; // إخفاء نتائج البحث
-        document.getElementById('search').value = ''; // مسح خانة البحث
+    }
+
+    function addFood() {
+        const foodName = document.getElementById('search').value;
+        const quantity = parseFloat(document.getElementById('quantity').value) || 100; // الحصول على الكمية
+
+        const food = foods.find(f => f.name === foodName);
+        if (food) {
+            selectedFoods.push({ food, quantity });
+            updateTable();
+            document.getElementById('search').value = ''; // مسح خانة البحث
+            document.getElementById('quantity').value = 100; // إعادة الكمية إلى 100
+        } else {
+            alert('الطعام غير موجود في القائمة.');
+        }
     }
 
     function updateTable() {
         const tbody = document.querySelector('#selectedFoodTable tbody');
         tbody.innerHTML = '';
 
-        let totalWeight = 0;
         let totalCalories = 0;
         let totalProtein = 0;
         let totalCarbs = 0;
         let totalFats = 0;
         let totalFiber = 0;
+        let totalWeight = 0;
 
-        selectedFoods.forEach(({ food, quantity }, index) => {
-            const tr = document.createElement('tr');
-
-            // حساب القيم الغذائية بناءً على الكمية المدخلة
-            const foodCalories = food.calories * (quantity / 100);
-            const foodProtein = food.protein * (quantity / 100);
-            const foodCarbs = food.carbs * (quantity / 100);
-            const foodFats = food.fats * (quantity / 100);
-            const foodFiber = food.fiber * (quantity / 100);
-
-            tr.innerHTML = `
+        selectedFoods.forEach(({ food, quantity }) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
                 <td>${food.name}</td>
                 <td>${quantity}</td>
-                <td>${foodCalories.toFixed(2)}</td>
-                <td>${foodProtein.toFixed(2)}</td>
-                <td>${foodCarbs.toFixed(2)}</td>
-                <td>${foodFats.toFixed(2)}</td>
-                <td>${foodFiber.toFixed(2)}</td>
-                <td><button class="remove-btn" onclick="removeFood(${index})">إزالة</button></td>
+                <td>${(food.calories * quantity / 100).toFixed(2)}</td>
+                <td>${(food.protein * quantity / 100).toFixed(2)}</td>
+                <td>${(food.carbs * quantity / 100).toFixed(2)}</td>
+                <td>${(food.fats * quantity / 100).toFixed(2)}</td>
+                <td>${(food.fiber * quantity / 100).toFixed(2)}</td>
+                <td><button class="remove-btn" onclick="removeFood('${food.name}')">حذف</button></td>
             `;
-            tbody.appendChild(tr);
+            tbody.appendChild(row);
 
-            // جمع القيم
+            // إضافة القيم للمجموع
+            totalCalories += food.calories * quantity / 100;
+            totalProtein += food.protein * quantity / 100;
+            totalCarbs += food.carbs * quantity / 100;
+            totalFats += food.fats * quantity / 100;
+            totalFiber += food.fiber * quantity / 100;
             totalWeight += quantity;
-            totalCalories += foodCalories;
-            totalProtein += foodProtein;
-            totalCarbs += foodCarbs;
-            totalFats += foodFats;
-            totalFiber += foodFiber;
         });
 
-        // تحديث المجموع
-        document.getElementById('totalWeight').textContent = totalWeight;
         document.getElementById('totalCalories').textContent = totalCalories.toFixed(2);
         document.getElementById('totalProtein').textContent = totalProtein.toFixed(2);
         document.getElementById('totalCarbs').textContent = totalCarbs.toFixed(2);
         document.getElementById('totalFats').textContent = totalFats.toFixed(2);
         document.getElementById('totalFiber').textContent = totalFiber.toFixed(2);
+        document.getElementById('totalWeight').textContent = totalWeight;
     }
 
-    function removeFood(index) {
-        selectedFoods.splice(index, 1); // إزالة العنصر المحدد
+    function removeFood(foodName) {
+        selectedFoods = selectedFoods.filter(item => item.food.name !== foodName);
         updateTable();
     }
 
     function clearTable() {
-        selectedFoods = []; // تفريغ القائمة
+        selectedFoods = [];
         updateTable();
     }
 
     function toggleNotes() {
         const notes = document.getElementById('notes');
         notes.style.display = notes.style.display === 'none' ? 'block' : 'none';
-        const notesArrow = document.getElementById('notesArrow');
-        notesArrow.innerHTML = notes.style.display === 'none' ? '&#x25BC;' : '&#x25B2;'; // تغيير السهم
+        document.getElementById('notesArrow').innerHTML = notes.style.display === 'none' ? '&#x25BC;' : '&#x25B2;'; // تغيير السهم
     }
 </script>
-
 </body>
 </html>
