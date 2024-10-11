@@ -39,7 +39,7 @@
         }
 
       input[type="number"] {
-            width: 90%;
+            width: 80%;
             padding: 8px;
             margin: 5px 0;
             border: 1px solid #ccc;
@@ -196,7 +196,7 @@
     <input type="text" id="search" placeholder="اكتب اسم الطعام" oninput="searchFood()">
     <input type="number" id="quantity" value="100" min="1" style="width: 20%;"> <!-- خانة الكمية -->
     <button onclick="addFood()">إدخال</button> <!-- زر إدخال -->
-    <button onclick="clearSearch()" style="background-color: red;">مسح البحث</button> <!-- زر مسح البحث -->
+    <button onclick="clearSearch()" style="background-color: red;">مسح</button> <!-- زر مسح البحث -->
     <ul id="searchResults"></ul>
 
     <!-- جدول الطعام المختار -->
@@ -614,13 +614,13 @@
             alert('لقد تجاوزت غرامات البروتين المطلوب.');
         } 
         if (totalCarbs > carbLimit) {
-            alert('لقد تجاوزت عدد الكارب المطلوب.');
+            alert('لقد تجاوزت غرامات الكارب المطلوب.');
         } 
         if (totalFats > fatLimit) {
-            alert('لقد تجاوزت عدد الدهون المطلوب.');
+            alert('لقد تجاوزت غرامات الدهون المطلوب.');
         } 
         if (totalFiber > fiberLimit) {
-            alert('لقد تجاوزت عدد الألياف المطلوب.');
+            alert('لقد تجاوزت غرامات الألياف المطلوب.');
         }
     }
 
