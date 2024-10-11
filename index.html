@@ -27,7 +27,7 @@
             text-align: center;
         }
 
-        input[type="text"], input[type="number"] {
+        input[type="text"] {
             width: 40%;
             padding: 8px;
             margin: 5px 0;
@@ -38,6 +38,16 @@
             font-size: 9px;
         }
 
+      input[type="number"] {
+            width: 90%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 9px;
+        }
         button {
             padding: 6px 10px;
             background-color: #4CAF50;
@@ -104,7 +114,7 @@
         }
 
         td {
-            font-size: 12px; /* تنسيق حجم النص ليكون مرئيًا بشكل أفضل */
+            font-size: 12px;
         }
 
         ul {
@@ -186,6 +196,7 @@
     <input type="text" id="search" placeholder="اكتب اسم الطعام" oninput="searchFood()">
     <input type="number" id="quantity" value="100" min="1" style="width: 20%;"> <!-- خانة الكمية -->
     <button onclick="addFood()">إدخال</button> <!-- زر إدخال -->
+    <button onclick="clearSearch()" style="background-color: red;">مسح البحث</button> <!-- زر مسح البحث -->
     <ul id="searchResults"></ul>
 
     <!-- جدول الطعام المختار -->
@@ -222,14 +233,14 @@
     </div>
     <div class="notes" id="notes">
         <p>• القيم المكتوبة في هذا البرنامج هي قيم تقريبية وممكن ان تختلف قليلاً وتختلف ايضاً الوجبات بطريقة التحضير والمواد المضافة </p>
-     <p>• تحديد الأهداف الغذائية سيساعدك في اختيار الأطعمة المناسبة لتحقيق نتائج أفضل.</p>
-    <p>• استخدم التطبيق لتتبع استهلاكك اليومي من السعرات والقيم الغذائية للبقاء على المسار الصحيح.</p>
-<p>• حاول تحقيق توازن بين البروتينات، الكربوهيدرات، والدهون في نظامك الغذائي.</p>
-<p>• قم بتجربة أطعمة جديدة واستكشاف المعلومات الغذائية الخاصة بها لتنويع نظامك الغذائي.</p>
-<p>• يمكنك تخصيص الوجبات حسب ذوقك واحتياجاتك، ولا تتردد في تعديل الكميات.</p>
-<p>• احرص على شرب الماء  .</p>
-<p>• قم بتقييم تقدمك بشكل دوري لتعديل نظامك الغذائي إذا لزم الأمر.</p>
-<p>• تذكر أن تحقيق الأهداف الغذائية يتطلب وقتًا وجهدًا، كن صبورًا مع نفسك واحتفل بالنجاحات الصغيرة.</p> 
+        <p>• تحديد الأهداف الغذائية سيساعدك في اختيار الأطعمة المناسبة لتحقيق نتائج أفضل.</p>
+        <p>• استخدم التطبيق لتتبع استهلاكك اليومي من السعرات والقيم الغذائية للبقاء على المسار الصحيح.</p>
+        <p>• حاول تحقيق توازن بين البروتينات، الكربوهيدرات، والدهون في نظامك الغذائي.</p>
+        <p>• قم بتجربة أطعمة جديدة واستكشاف المعلومات الغذائية الخاصة بها لتنويع نظامك الغذائي.</p>
+        <p>• يمكنك تخصيص الوجبات حسب ذوقك واحتياجاتك، ولا تتردد في تعديل الكميات.</p>
+        <p>• احرص على شرب الماء  .</p>
+        <p>• قم بتقييم تقدمك بشكل دوري لتعديل نظامك الغذائي إذا لزم الأمر.</p>
+        <p>• تذكر أن تحقيق الأهداف الغذائية يتطلب وقتًا وجهدًا، كن صبورًا مع نفسك واحتفل بالنجاحات الصغيرة.</p> 
         <p>• احسب كل شيء فهنالك أطعمة صغيرة الحجم وكثيرة السعرات.</p>
     </div>
 </div>
@@ -238,8 +249,7 @@
     let selectedFoods = [];
 
     const foods =[
-    // فواكه
-    { name: 'موز', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6 },
+   { name: 'موز', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6 },
     { name: 'تفاح', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4 },
     { name: 'برتقال', calories: 47, protein: 0.9, carbs: 12, fats: 0.1, fiber: 2.4 },
     { name: 'عنب', calories: 69, protein: 0.6, carbs: 18, fats: 0.2, fiber: 0.9 },
@@ -255,8 +265,6 @@
     { name: 'يوسفي', calories: 53, protein: 0.8, carbs: 13, fats: 0.3, fiber: 1.8 },
     { name: 'بلوبيري', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4 },
     { name: 'روز بيري', calories: 57, protein: 1.2, carbs: 14, fats: 0.3, fiber: 6.5 },
-
-    // خضروات
     { name: 'خس', calories: 15, protein: 1.4, carbs: 2.9, fats: 0.2, fiber: 1.3 },
     { name: 'طماطم', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2 },
     { name: 'خيار', calories: 16, protein: 0.7, carbs: 3.6, fats: 0.1, fiber: 0.5 },
@@ -271,16 +279,12 @@
     { name: 'باذنجان مشوي', calories: 35, protein: 0.8, carbs: 8.7, fats: 0.2, fiber: 2.5 },
     { name: 'بطاطا حلوة', calories: 86, protein: 1.6, carbs: 20, fats: 0.1, fiber: 3.0 },
     { name: 'كوسا', calories: 17, protein: 1.2, carbs: 3.1, fats: 0.2, fiber: 1.0 },
-
-    // بقوليات
     { name: 'عدس مطبوخ', calories: 116, protein: 9, carbs: 20, fats: 0.4, fiber: 7.9 },
     { name: 'حمص مطبوخ', calories: 164, protein: 8.9, carbs: 27, fats: 2.6, fiber: 7.6 },
     { name: 'فاصولياء مطبوخة', calories: 127, protein: 8.7, carbs: 23, fats: 0.5, fiber: 6.4 },
     { name: 'بازلاء مطبوخة', calories: 81, protein: 5.4, carbs: 14, fats: 0.4, fiber: 5.7 },
     { name: 'فول مطبوخ', calories: 127, protein: 8.3, carbs: 22, fats: 0.6, fiber: 9.4 },
     { name: 'طحينية', calories: 595, protein: 17, carbs: 20, fats: 53, fiber: 8.0 },
-
-    // زيوت
     { name: 'زيت زيتون', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
     { name: 'زيت عباد الشمس', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
     { name: 'زيت جوز الهند', calories: 892, protein: 0, carbs: 0, fats: 100, fiber: 0 },
@@ -288,8 +292,6 @@
     { name: 'زيت الكانولا', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
     { name: 'زيت السمسم', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
     { name: 'زيت الفول السوداني', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-
-    // نشويات
     { name: 'أرز مسلوق (تمن مبزول) ', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
     { name: 'معكرونة مسلوقة', calories: 158, protein: 5.8, carbs: 31, fats: 0.9, fiber: 1.8 },
     { name: 'خبز أبيض', calories: 265, protein: 9, carbs: 49, fats: 3.2, fiber: 2.7 },
@@ -456,7 +458,7 @@
 { name: 'ذرة مطبوخة', calories: 96, protein: 3.4, carbs: 21, fats: 1.5, fiber: 2.4 },
 { name: 'بصل مشوي', calories: 40, protein: 1, carbs: 9, fats: 0.1, fiber: 1.7 },
 { name: 'طماطة مشوية', calories: 22, protein: 1.1, carbs: 4.8, fats: 0.2, fiber: 1.5 },
-   { name: 'شربت تانج أكياس تحضير سريع', calories: 80, protein: 0, carbs: 20, fats: 0, fiber: 0 },
+{ name: 'شربت تانج أكياس تحضير سريع', calories: 80, protein: 0, carbs: 20, fats: 0, fiber: 0 },
 { name: 'ملح باليود', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
 { name: 'ملح بدون يود', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
 { name: 'ماء', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
@@ -475,7 +477,8 @@
 { name: 'زبدة نباتية بالكريمة', calories: 735, protein: 0.4, carbs: 1, fats: 82, fiber: 0 },
 { name: 'جبس ليز بالجبنة الفرنسية', calories: 280, protein: 12, carbs: 26, fats: 17, fiber: 1 },
 { name: 'واي بروتين', calories: 100, protein: 20, carbs: 2, fats: 1, fiber: 0 },
-{ name: 'ماس بروتين', calories: 120, protein: 24, carbs: 8, fats: 2, fiber: 0 },
+{ name: 'ماس بروتين', calories: 120, protein: 24, carbs: 8, fats: 2, fiber: 0 },    
+    // إضافة المزيد من الأطعمة حسب الحاجة
     ];
 
     function searchFood() {
@@ -565,7 +568,7 @@
         document.getElementById('totalFiber').textContent = totalFiber.toFixed(2);
         document.getElementById('totalWeight').textContent = totalWeight;
 
-        checkLimits(); // استدعاء دالة التحقق
+        checkLimits();
     }
 
     function removeFood(name) {
@@ -628,6 +631,11 @@
         document.getElementById('carbLimit').value = '';
         document.getElementById('fatLimit').value = '';
         document.getElementById('fiberLimit').value = '';
+    }
+
+    // دالة لمسح خانة البحث
+    function clearSearch() {
+        document.getElementById('search').value = '';
     }
 </script>
 
