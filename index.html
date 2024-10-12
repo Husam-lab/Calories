@@ -1,539 +1,2942 @@
+
 <!DOCTYPE html>
 <html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة الطعام</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            background-color: #f0f0f5;
-            color: #333;
-            padding: 10px;
-            margin: 0;
-            font-size: 12px;
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>حاسبة السعرات</title>
 
-        h1, h3 {
-            color: #4CAF50;
-            text-align: center;
-            margin: 10px 0;
+    <!-- <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f5;
+        direction: rtl;
+        color: #333;
+        padding: 20px;
+        margin: 0;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        min-height: 100vh;
+      }
+
+      h1,
+      h3 {
+        color: #4caf50;
+        text-align: center;
+        margin: 10px 0;
+        font-size: 24px;
+      }
+
+      .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+        text-align: right;
+        width: 100%;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus {
+        border-color: #4caf50;
+        outline: none;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+      }
+
+      button#calculate {
+        background-color: #28a745;
+        color: white;
+      }
+
+      button#calculate:hover {
+        background-color: #218838;
+      }
+
+      button#reset,
+      button.reset-btn {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      button#reset:hover,
+      button.reset-btn:hover {
+        background-color: #c82333;
+      }
+
+      button.clear-btn {
+        background-color: #f44336;
+        color: white;
+      }
+
+      button.clear-btn:hover {
+        background-color: #d93434;
+      }
+
+      button.remove-btn {
+        background-color: #ff9800;
+        color: white;
+      }
+
+      button.remove-btn:hover {
+        background-color: #cc8400;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        flex-wrap: wrap; /* Make buttons wrap on smaller screens */
+      }
+
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+        text-align: center;
+      }
+
+      .notes {
+        color: #333;
+        font-size: 14px;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: right;
+        display: none;
+      }
+
+      .notes u {
+        font-weight: bold;
+      }
+
+      .toggle-notes {
+        cursor: pointer;
+        color: red;
+        text-align: center;
+        font-size: 14px;
+        text-decoration: underline;
+      }
+
+      table {
+        width: 100%;
+        margin: 15px 0;
+        border-collapse: collapse;
+        background-color: white;
+        font-size: 14px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      td {
+        font-size: 14px;
+      }
+
+      .totals-row {
+        font-weight: bold;
+        background-color: #f0f0f5;
+        color: red;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        display: none;
+      }
+
+      ul li {
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      ul li:hover {
+        background-color: #e0e0e0;
+      }
+
+      .collapsible {
+        cursor: pointer;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: none;
+        outline: none;
+        text-align: left;
+        font-size: 16px;
+        transition: 0.4s;
+      }
+
+      .collapsible:after {
+        content: "\25bc"; /* Down arrow */
+        font-size: 13px;
+        color: black;
+        float: left;
+        margin-right: 10px;
+      }
+
+      .collapsible.active:after {
+        content: "\25b2"; /* Up arrow */
+      }
+
+      .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f9f9f9;
+        color: black;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        h1,
+        h3 {
+          font-size: 18px;
         }
 
         .container {
-            max-width: 100%;
-            margin: 0 auto;
-            text-align: center;
+          max-width: 100%; /* Full width container on mobile */
         }
 
-        input[type="text"] {
-            width: 40%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 9px;
+        input[type="text"],
+        input[type="number"],
+        select {
+          font-size: 12px; /* Smaller font for inputs on mobile */
         }
 
-      input[type="number"] {
-            width: 80%;
-            padding: 8px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 9px;
-        }
         button {
-            padding: 6px 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 10px;
-            margin: 3px;
+          font-size: 12px; /* Slightly smaller buttons for mobile */
+          width: 100%; /* Full width buttons for mobile */
+          margin: 10px 0;
         }
 
-        button:hover {
-            background-color: #45a049;
-        }
-
-        button.clear-btn {
-            background-color: red;
-            font-size: 10px;
-        }
-
-        button.clear-btn:hover {
-            background-color: #d93434;
-        }
-
-        button.remove-btn {
-            background-color: orange;
-            font-size: 10px;
-        }
-
-        button.remove-btn:hover {
-            background-color: #cc8400;
-        }
-
-        button.reset-btn {
-            background-color: red;
-            font-size: 12px;
-            padding: 8px 12px;
-        }
-
-        button.reset-btn:hover {
-            background-color: #d93434;
-        }
-
-        table {
-            width: 100%;
-            margin: 15px 0;
-            border-collapse: collapse;
-            background-color: white;
-            font-size: 12px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 6px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
+        table,
+        th,
         td {
-            font-size: 12px;
+          font-size: 12px; /* Adjust table font size for smaller screens */
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
-            display: none;
+        .buttons {
+          flex-direction: column; /* Stack buttons on top of each other on mobile */
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px; /* Less padding for very small screens */
         }
 
-        ul li {
-            background-color: #f9f9f9;
-            margin: 3px 0;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            cursor: pointer;
+        h1,
+        h3 {
+          font-size: 16px; /* Further reduced heading size */
         }
 
-        ul li:hover {
-            background-color: #e0e0e0;
+        input[type="text"],
+        input[type="number"],
+        select {
+          font-size: 10px; /* Smaller inputs on very small screens */
         }
 
-        .totals-row {
-            font-weight: bold;
-            background-color: #f0f0f5;
-            color: red;
+        button {
+          font-size: 10px; /* Smaller buttons for compact screens */
         }
 
-        .notes {
-            display: none;
-            margin: 10px 0;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        table,
+        th,
+        td {
+          font-size: 10px;
+        }
+      }
+    </style> -->
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f5;
+        direction: rtl;
+        color: #333;
+        padding: 0px;
+        margin: 0;
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        min-height: 100vh;
+                font-weight: bold;
+      }
+
+      h1,
+      h3 {
+        color: #4caf50;
+        text-align: center;
+        margin: 10px 0;
+        font-size: 24px;
+      }
+.container {
+    background: linear-gradient(to bottom, rgba(160, 216, 239, 0.8), rgba(64, 224, 208, 0.7), rgba(32, 178, 170, 0.7)); /* تدرج لوني ناعم */
+    padding: 0px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+/* تأثيرات الأضواء المتحركة */
+.container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent 50%);
+    animation: lightmove 6s infinite ease-in-out;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
+@keyframes lightmove {
+    0% { transform: rotate(45deg) translateX(0); }
+    50% { transform: rotate(45deg) translateX(50px); }
+    100% { transform: rotate(45deg) translateX(0); }
+}
+
+/* أشكال دائرية متحركة */
+.container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent 70%);
+    border-radius: 50%;
+    animation: pulse 8s infinite ease-in-out;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: -2;
+}
+
+@keyframes pulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+      input[type="text"],
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus,
+      select:focus {
+        border-color: #4caf50;
+        outline: none;
+      }
+
+      button {
+        padding: 12px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+        transition: background-color 0.3s ease, transform 0.2s;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+      }
+
+      button#calculate {
+        background-color: #28a745;
+        color: white;
+      }
+
+      button#calculate:hover {
+        background-color: #218838;
+        color: white;
+      }
+
+      button#reset,
+      button.reset-btn {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      button#reset:hover,
+      button.reset-btn:hover {
+        background-color: #c82333;
+        color: white;
+      }
+
+      button.clear-btn {
+        background-color: #f44336;
+        color: white;
+      }
+
+      button.clear-btn:hover {
+        background-color: #d93434;
+        color: white;
+      }
+
+      button.remove-btn {
+        background-color: #ff9800;
+        width: 10px;
+        color: white;
+      }
+
+      button.remove-btn:hover {
+        background-color: #cc8400;
+        color: white;
+      }
+
+      .buttons {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        flex-wrap: wrap; /* Make buttons wrap on smaller screens */
+      }
+
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+        text-align: center;
+      }
+
+      .notes {
+        color: #333;
+        font-size: 14px;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+        display: none;
+      }
+
+      .notes u {
+        font-weight: bold;
+      }
+
+      .toggle-notes {
+cursor: pointer;
+background-color: #f9f9f9; padding: 10px;
+border: none;
+outline: none;
+        text-align: center;
+        font-size: 16px;
+                color: blue;
+      }
+
+      /* New wrapper for scrollable table */
+      .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        margin: 15px 0;
+        border-collapse: collapse;
+        background-color: white;
+        font-size: 14px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+      }
+
+      th,
+      td {
+        padding: 5px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      td {
+        font-size: 14px;
+      }
+
+      .totals-row {
+        font-weight: bold;
+        background-color: #f0f0f5;
+        color: red;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        display: none;
+      }
+
+      ul li {
+        background-color: #f9f9f9;
+        margin: 5px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      ul li:hover {
+        background-color: #e0e0e0;
+      }
+
+      .collapsible {
+        cursor: pointer;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border: none;
+        outline: none;
+        text-align: center;
+        font-size: 16px;
+        transition: 0.4s;
+      }
+
+      .collapsible:after {
+        content: "\25bc"; /* Down arrow */
+        font-size: 13px;
+        color: black;
+        float: center;
+        margin-right: 10px;
+      }
+
+      .collapsible.active:after {
+        content: "\25b2"; /* Up arrow */
+      }
+
+      .content {
+        padding: 0 18px;
+        display: none;
+        overflow: hidden;
+        background-color: #f9f9f9;
+        color: black;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        h1,
+        h3 {
+          font-size: 18px;
         }
 
-        .toggle-notes {
-            cursor: pointer;
-            color: #4CAF50;
-            text-align: center;
-            font-size: 14px;
-            text-decoration: underline;
-            color: red;
+        .container {
+          max-width: 100%; /* Full width container on mobile */
         }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+          font-size: 12px; /* Smaller font for inputs on mobile */
+        }
+
+        button {
+          font-size: 12px; /* Slightly smaller buttons for mobile */
+          width: 100%; /* Full width buttons for mobile */
+          margin: 10px 0;
+        }
+
+        table,
+        th,
+        td {
+          font-size: 12px; /* Adjust table font size for smaller screens */
+        }
+
+        .buttons {
+          flex-direction: column; /* Stack buttons on top of each other on mobile */
+          align-items: center;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 0px; /* Less padding for very small screens */
+        }
+
+        h1,
+        h3 {
+          font-size: 16px; /* Further reduced heading size */
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+          font-size: 10px; /* Smaller inputs on very small screens */
+        }
+
+        button {
+          font-size: 10px; /* Smaller buttons for compact screens */
+        }
+
+        table,
+        th,
+        td {
+          font-size: 10px;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <h1>حاسبة السعرات</h1>
+<div class="author" style="color: blue; font-weight: bold;">(إعداد حسام الحديدي)</div>
+      <div class="author">
+_________________________________________________
+      </div>
+      <label for="gender">اختر الجنس :</label>
+      <select id="gender" onchange="toggleHipMeasurement()">
+        <option value="ذكر">ذكر</option>
+        <option value="أنثى">أنثى</option></select
+      ><br />
 
-<div class="container">
-    <h1>برنامج حساب الطعام</h1>
-    <p style="color: blue;">(حسام الحديدي)</p>
+      <label for="weight">ادخل الوزن (بالكيلوغرام):</label>
+      <input
+        type="number"
+        id="weight"
+        placeholder="أدخل وزنك بالكيلوغرام"
+        required
+      /><br />
 
-    <!-- جدول إدخال الحدود -->
-    <h3>أدخل احتياجك من الأرقام</h3>
-    <table>
+      <label for="calorie_deficit">ادخل عجز السعرات الحرارية ( اختياري ):</label>
+      <input
+        type="number"
+        id="calorie_deficit"
+        placeholder="أدخل العجز (لانقاص الوزن)"
+      /><br />
+
+      <label for="calorie_surplus">ادخل زيادة السعرات الحرارية ( اختياري )  :</label>
+      <input
+        type="number"
+        id="calorie_surplus"
+        placeholder="أدخل الزيادة (لزيادة الوزن)"
+      /><br />
+
+      <label for="waist">ادخل محيط الخصر (بالسنتيمتر):</label>
+      <input
+        type="number"
+        id="waist"
+        placeholder="أدخل محيط خصرك"
+        required
+      /><br />
+
+      <label for="neck">ادخل محيط الرقبة (بالسنتيمتر):</label>
+      <input
+        type="number"
+        id="neck"
+        placeholder="أدخل محيط رقبتك"
+        required
+      /><br />
+
+      <label for="height">ادخل الطول (بالسنتيمتر):</label>
+      <input type="number" id="height" placeholder="أدخل طولك" required /><br />
+
+      <div id="hipMeasurementContainer" style="display: none">
+        <label for="hip">ادخلي محيط المؤخرة (بالسنتيمتر):</label>
+        <input
+          type="number"
+          id="hip"
+          placeholder="أدخل محيط المؤخرة"
+          required
+        /><br />
+      </div>
+
+      <div class="buttons">
+        <button id="calculate" onclick="calculateCalories()">احسب السعرات والاحتياج</button>
+        <button id="reset" onclick="resetForm()">تصفير الحسابات</button>
+      </div>
+
+      <div class="result" id="result">
+        <p>محصلة السعرات: <span id="totalCalories"></span> سعرة حرارية</p>
+        <p>احتياجك للكربوهيدرات: <span id="carbs"></span> غرام</p>
+        <p>احتياجك للبروتينات: <span id="proteins"></span> غرام</p>
+        <p>احتياجك للدهون: <span id="fats"></span> غرام</p>
+        <p>نسبة الدهون في جسمك: <span id="bodyFatPercentage"></span>%</p>
+      </div>
+      <button type="button" class="collapsible">انقر هنا للملاحظات حول حاسبة السعرات : </button>
+      <div class="content">
+        <div id="Notes">
+          <br />
+          - اذا اردت معرفة كم احتياج جسمك من السعرات للحفاظ على وزنك لاتكتب شيء
+          في عجز السعرات او زيادة السعرات .<br />
+          <br />
+          - اذا اردت نزول صحي اكتب العجز 500-700 سعرة لخسارة مايقارب 3-4 كغم
+          شهرياً.<br />
+          <br />
+          - اذا اردت زيادة الوزن ادخل رقم السعرات التي يجب ان تزيدها على طعامك
+          لزيادة الوزن.<br />
+          <br />
+          - قياس الخصر والرقبة:<br />
+          <table class="table">
+            <tr>
+              <th class="category">الأنثى</th>
+              <th class="category">الذكر</th>
+            </tr>
+            <tr>
+              <td>
+                يتم أخذ أصغر مقاس للرقبة (تحت الذقن) و مقاس الوسط فوق الصرة و
+                أكبر مقاس للمؤخرة.
+              </td>
+              <td>
+                يتم أخذ أصغر مقاس للرقبة (تحت الذقن) و مقاس الوسط عند صرة البطن
+                بالسنتيمتر.
+              </td>
+            </tr>
+          </table>
+          <br />
+          - جدول قياس نسبة الدهون:<br />
+          <table class="table">
+            <tr>
+              <th>الفئة</th>
+              <th>الأنثى</th>
+              <th>الذكر</th>
+            </tr>
+            <tr>
+              <td>دهون أساسية</td>
+              <td>10 – 13%</td>
+              <td>2 – 5%</td>
+            </tr>
+            <tr>
+              <td>رياضي محترف</td>
+              <td>14 – 20%</td>
+              <td>6 – 13%</td>
+            </tr>
+            <tr>
+              <td>فتنس</td>
+              <td>21 – 24%</td>
+              <td>14 – 17%</td>
+            </tr>
+            <tr>
+              <td>متوسط</td>
+              <td>25 – 31%</td>
+              <td>18 – 24%</td>
+            </tr>
+            <tr>
+              <td>سمين</td>
+              <td>> 31%</td>
+              <td>> 25%</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div style="width: 100%; height: 1px; background-color: #218838"></div>
+    <div class="container">
+      <h1>برنامج حساب الطعام</h1>
+      <p style="color: blue">(اذا حسبت القيم من الحاسبة اعلاه سيدخل احتياجك تلقائياً بالجدول)</p>
+
+      <!-- جدول إدخال الحدود -->
+      <h3>جدول احتياجك </h3>
+      <table>
         <thead>
-        <tr>
+          <tr>
             <th>السعرات</th>
             <th>البروتين</th>
             <th>الكارب</th>
             <th>الدهون</th>
             <th>الألياف</th>
-        </tr>
+          </tr>
         </thead>
         <tbody>
-        <tr>
-            <td><input type="number" id="calorieLimit" placeholder="السعرات" min="0"></td>
-            <td><input type="number" id="proteinLimit" placeholder="البروتين" min="0"></td>
-            <td><input type="number" id="carbLimit" placeholder="الكارب" min="0"></td>
-            <td><input type="number" id="fatLimit" placeholder="الدهون" min="0"></td>
-            <td><input type="number" id="fiberLimit" placeholder="الألياف" min="0"></td>
-        </tr>
+          <tr>
+            <td>
+              <input
+                type="number"
+                id="calorieLimit"
+                placeholder="السعرات"
+                min="0"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                id="proteinLimit"
+                placeholder="البروتين"
+                min="0"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                id="carbLimit"
+                placeholder="الكارب"
+                min="0"
+              />
+            </td>
+            <td>
+              <input type="number" id="fatLimit" placeholder="الدهون" min="0" />
+            </td>
+            <td>
+              <input
+                type="number"
+                id="fiberLimit"
+                placeholder="الألياف"
+                min="0"
+              />
+            </td>
+          </tr>
         </tbody>
-    </table>
-    <button class="reset-btn" onclick="resetLimits()">تصفير الاحتياج</button> <!-- زر لتصفير الاحتياج -->
+      </table>
+      <button class="reset-btn" onclick="resetLimits()">تصفير الاحتياج</button>
+      <!-- زر لتصفير الاحتياج -->
 
-    <!-- البحث عن الطعام -->
-    <h3>اختار اسم الطعام واكتب بجانبه الكمية بالغرام</h3>
-    <input type="text" id="search" placeholder="اكتب اسم الطعام" oninput="searchFood()">
-    <input type="number" id="quantity" value="100" min="1" style="width: 20%;"> <!-- خانة الكمية -->
-    <button onclick="addFood()">إدخال</button> <!-- زر إدخال -->
-    <button onclick="clearSearch()" style="background-color: red;">مسح البحث</button> <!-- زر مسح البحث -->
-    <ul id="searchResults"></ul>
+      <!-- البحث عن الطعام -->
+      <h3>اختر اسم الطعام واكتب بجانبه الكمية بالغرام</h3>
+      <div style="display: flex; gap: 5px">
+        <!-- خانة الكمية -->
+        <input
+          type="text"
+          id="search"
+          placeholder="اكتب اسم الطعام"
+          oninput="searchFood()"
+          style="width: 45%; flex-shrink: 0"
+        />
+      <input
+        type="number"
+        id="quantity"
+        value="100"
+        min="1"
+        style="width: 30%"
+      />
+        <button onclick="addFood()"style="background-color:  #28a745; color: white; width: 25%;">إدخال</button>
+        <!-- زر إدخال -->
+        <button onclick="clearSearch()" style="background-color: #dc3545; color: white; width: 25%;">
+          مسح  
+        </button>
+        </div>
+        <!-- زر مسح البحث -->
+      <ul id="searchResults"></ul>
 
-    <!-- جدول الطعام المختار -->
-    <h3>قائمة الأطعمة المختارة</h3>
-    <table id="selectedFoodTable">
-        <thead>
-        <tr>
-            <th>اسم الطعام</th>
-            <th>الكمية (غرام)</th>
-            <th>السعرات الحرارية</th>
-            <th>البروتين</th>
-            <th>الكارب</th>
-            <th>الدهون</th>
-            <th>الألياف</th>
-            <th>إزالة</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-        <tr class="totals-row">
+      <!-- جدول الطعام المختار -->
+      <h3>قائمة الأطعمة المختارة</h3>
+      <div class="table-wrapper">
+        <table id="selectedFoodTable">
+          <thead>
+            <tr>
+              <th>الطعام</th>
+              <th>الكمية (غم)</th>
+              <th>السعرات</th>
+              <th>البروتين</th>
+              <th>الكارب</th>
+              <th>الدهون</th>
+              <th>الألياف</th>
+              <th>إزالة</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tr class="totals-row">
             <td>المجموع</td>
             <td id="totalWeight">0</td>
-            <td id="totalCalories">0</td>
+            <td id="totalCalories-red">0</td>
             <td id="totalProtein">0</td>
             <td id="totalCarbs">0</td>
             <td id="totalFats">0</td>
             <td id="totalFiber">0</td>
-            <td><button class="clear-btn" onclick="clearTable()">تصفير القائمة</button></td>
-        </tr>
-    </table>
-
-    <!-- ملاحظات -->
-    <div class="toggle-notes" onclick="toggleNotes()">
-        <span id="notesArrow">&#x25BC;</span> ملاحظات
-    </div>
-    <div class="notes" id="notes">
-        <p>• القيم المكتوبة في هذا البرنامج هي قيم تقريبية وممكن ان تختلف قليلاً وتختلف ايضاً الوجبات بطريقة التحضير والمواد المضافة </p>
-        <p>• تحديد الأهداف الغذائية سيساعدك في اختيار الأطعمة المناسبة لتحقيق نتائج أفضل.</p>
-        <p>• استخدم التطبيق لتتبع استهلاكك اليومي من السعرات والقيم الغذائية للبقاء على المسار الصحيح.</p>
-        <p>• حاول تحقيق توازن بين البروتينات، الكربوهيدرات، والدهون في نظامك الغذائي.</p>
-        <p>• قم بتجربة أطعمة جديدة واستكشاف المعلومات الغذائية الخاصة بها لتنويع نظامك الغذائي.</p>
-        <p>• يمكنك تخصيص الوجبات حسب ذوقك واحتياجاتك، ولا تتردد في تعديل الكميات.</p>
-        <p>• احرص على شرب الماء  .</p>
+            <td>
+              <button class="clear-btn" onclick="clearTable()">حذف</button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!-- ملاحظات -->
+      <div class="toggle-notes" onclick="toggleNotes()">
+        <span id="notesArrow">&#x25BC;</span> انقر هنا للملاحظات حول حساب اصناف الطعام :
+      </div>
+            </div>
+    
+    ® HUSAM AL-HADIDI
+          </div>
+      <div class="notes" id="notes">
+        <p>
+          • القيم المكتوبة في هذا البرنامج هي قيم تقريبية وممكن ان تختلف قليلاً
+          وتختلف ايضاً الوجبات بطريقة التحضير والمواد المضافة
+        </p>
+        <p>
+          • تحديد الأهداف الغذائية سيساعدك في اختيار الأطعمة المناسبة لتحقيق
+          نتائج أفضل.
+        </p>
+        <p>
+          • استخدم التطبيق لتتبع استهلاكك اليومي من السعرات والقيم الغذائية
+          للبقاء على المسار الصحيح.
+        </p>
+        <p>
+          • حاول تحقيق توازن بين البروتينات، الكربوهيدرات، والدهون في نظامك
+          الغذائي.
+        </p>
+        <p>
+          • قم بتجربة أطعمة جديدة واستكشاف المعلومات الغذائية الخاصة بها لتنويع
+          نظامك الغذائي.
+        </p>
+        <p>
+          • يمكنك تخصيص الوجبات حسب ذوقك واحتياجاتك، ولا تتردد في تعديل الكميات.
+        </p>
+        <p>• احرص على شرب الماء .</p>
         <p>• قم بتقييم تقدمك بشكل دوري لتعديل نظامك الغذائي إذا لزم الأمر.</p>
-        <p>• تذكر أن تحقيق الأهداف الغذائية يتطلب وقتًا وجهدًا، كن صبورًا مع نفسك واحتفل بالنجاحات الصغيرة.</p> 
+        <p>
+          • تذكر أن تحقيق الأهداف الغذائية يتطلب وقتًا وجهدًا، كن صبورًا مع نفسك
+          واحتفل بالنجاحات الصغيرة.
+        </p>
         <p>• احسب كل شيء فهنالك أطعمة صغيرة الحجم وكثيرة السعرات.</p>
+      </div>
     </div>
-</div>
+    <script>
+      function calculateCalories() {
+        // الحصول على القيم من الحقول
+        let weight = parseFloat(document.getElementById("weight").value);
+        let calorieDeficit =
+          parseFloat(document.getElementById("calorie_deficit").value) || 0; // استخدام 0 إذا لم يتم إدخال قيمة
+        let calorieSurplus =
+          parseFloat(document.getElementById("calorie_surplus").value) || 0; // استخدام 0 إذا لم يتم إدخال قيمة
+        let gender = document.getElementById("gender").value;
+        let waist = parseFloat(document.getElementById("waist").value);
+        let neck = parseFloat(document.getElementById("neck").value);
+        let height = parseFloat(document.getElementById("height").value);
+        let hip =
+          document.getElementById("hip").style.display !== "none"
+            ? parseFloat(document.getElementById("hip").value)
+            : 0;
 
-<script>
-    let selectedFoods = [];
-
-    const foods =[
-   { name: 'موز', calories: 89, protein: 1.1, carbs: 23, fats: 0.3, fiber: 2.6 },
-    { name: 'تفاح', calories: 52, protein: 0.3, carbs: 14, fats: 0.2, fiber: 2.4 },
-    { name: 'برتقال', calories: 47, protein: 0.9, carbs: 12, fats: 0.1, fiber: 2.4 },
-    { name: 'عنب', calories: 69, protein: 0.6, carbs: 18, fats: 0.2, fiber: 0.9 },
-    { name: 'فراولة', calories: 32, protein: 0.7, carbs: 7.7, fats: 0.3, fiber: 2.0 },
-    { name: 'كيوي', calories: 61, protein: 1.1, carbs: 15, fats: 0.5, fiber: 3.0 },
-    { name: 'أناناس', calories: 50, protein: 0.5, carbs: 13, fats: 0.1, fiber: 1.4 },
-    { name: 'خوخ', calories: 39, protein: 0.9, carbs: 10, fats: 0.3, fiber: 1.5 },
-    { name: 'جريب فروت', calories: 42, protein: 0.8, carbs: 11, fats: 0.1, fiber: 1.4 },
-    { name: 'مشمش', calories: 48, protein: 1.4, carbs: 12, fats: 0.1, fiber: 2.0 },
-    { name: 'تين', calories: 74, protein: 0.8, carbs: 19, fats: 0.3, fiber: 2.9 },
-    { name: 'رمان', calories: 83, protein: 1.7, carbs: 19, fats: 1.2, fiber: 4.0 },
-    { name: 'بطيخ', calories: 30, protein: 0.6, carbs: 8, fats: 0.2, fiber: 0.4 },
-    { name: 'يوسفي', calories: 53, protein: 0.8, carbs: 13, fats: 0.3, fiber: 1.8 },
-    { name: 'بلوبيري', calories: 57, protein: 0.7, carbs: 14, fats: 0.3, fiber: 2.4 },
-    { name: 'روز بيري', calories: 57, protein: 1.2, carbs: 14, fats: 0.3, fiber: 6.5 },
-    { name: 'خس', calories: 15, protein: 1.4, carbs: 2.9, fats: 0.2, fiber: 1.3 },
-    { name: 'طماطم', calories: 18, protein: 0.9, carbs: 3.9, fats: 0.2, fiber: 1.2 },
-    { name: 'خيار', calories: 16, protein: 0.7, carbs: 3.6, fats: 0.1, fiber: 0.5 },
-    { name: 'جزر', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 2.8 },
-    { name: 'بطاطس مسلوقة', calories: 87, protein: 2, carbs: 20, fats: 0.1, fiber: 1.8 },
-    { name: 'بروكلي', calories: 34, protein: 2.8, carbs: 7, fats: 0.4, fiber: 2.6 },
-    { name: 'سبانخ', calories: 23, protein: 2.9, carbs: 3.6, fats: 0.4, fiber: 2.2 },
-    { name: 'قرنبيط', calories: 25, protein: 1.9, carbs: 5, fats: 0.3, fiber: 2.0 },
-    { name: 'فلفل رومي', calories: 31, protein: 1, carbs: 6, fats: 0.3, fiber: 2.1 },
-    { name: 'فطر', calories: 22, protein: 3.1, carbs: 3.3, fats: 0.3, fiber: 1.0 },
-    { name: 'باذنجان مقلي', calories: 271, protein: 1.0, carbs: 16.0, fats: 22.0, fiber: 2.5 },
-    { name: 'باذنجان مشوي', calories: 35, protein: 0.8, carbs: 8.7, fats: 0.2, fiber: 2.5 },
-    { name: 'بطاطا حلوة', calories: 86, protein: 1.6, carbs: 20, fats: 0.1, fiber: 3.0 },
-    { name: 'كوسا', calories: 17, protein: 1.2, carbs: 3.1, fats: 0.2, fiber: 1.0 },
-    { name: 'عدس مطبوخ', calories: 116, protein: 9, carbs: 20, fats: 0.4, fiber: 7.9 },
-    { name: 'حمص مطبوخ', calories: 164, protein: 8.9, carbs: 27, fats: 2.6, fiber: 7.6 },
-    { name: 'فاصولياء مطبوخة', calories: 127, protein: 8.7, carbs: 23, fats: 0.5, fiber: 6.4 },
-    { name: 'بازلاء مطبوخة', calories: 81, protein: 5.4, carbs: 14, fats: 0.4, fiber: 5.7 },
-    { name: 'فول مطبوخ', calories: 127, protein: 8.3, carbs: 22, fats: 0.6, fiber: 9.4 },
-    { name: 'طحينية', calories: 595, protein: 17, carbs: 20, fats: 53, fiber: 8.0 },
-    { name: 'زيت زيتون', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'زيت عباد الشمس', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'زيت جوز الهند', calories: 892, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'زيت الذرة', calories: 900, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'زيت الكانولا', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'زيت السمسم', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'زيت الفول السوداني', calories: 884, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-    { name: 'أرز مسلوق (تمن مبزول) ', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
-    { name: 'معكرونة مسلوقة', calories: 158, protein: 5.8, carbs: 31, fats: 0.9, fiber: 1.8 },
-    { name: 'خبز أبيض', calories: 265, protein: 9, carbs: 49, fats: 3.2, fiber: 2.7 },
-    { name: 'خبز أسمر', calories: 247, protein: 9, carbs: 43, fats: 3.3, fiber: 7.0 },
-    { name: 'خبز الشوفان', calories: 247, protein: 9, carbs: 42, fats: 4.2, fiber: 8.0 },
-    { name: 'خبز اللوز', calories: 535, protein: 21, carbs: 20, fats: 47, fiber: 12.5 },
-    { name: 'خبز الشعير', calories: 250, protein: 9, carbs: 45, fats: 2.5, fiber: 8.0 },
-    { name: 'خبز الذرة', calories: 321, protein: 9.2, carbs: 72, fats: 4.3, fiber: 7.3 },
-    { name: 'برغل مطبوخ', calories: 83, protein: 3.1, carbs: 18.6, fats: 0.2, fiber: 4.5 },
-    { name: 'صدر دجاج مطبوخ', calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0 },
-    { name: 'صدر دجاج مشوي', calories: 165, protein: 31, carbs: 0, fats: 3.6, fiber: 0 },
-    { name: 'تمر', calories: 277, protein: 2, carbs: 75, fats: 0.2, fiber: 7 },
-    { name: 'فخذ الدجاج المطبوخ', calories: 190, protein: 24, carbs: 0, fats: 10, fiber: 0 },
-    { name: 'جناح الدجاج المطبوخ', calories: 203, protein: 23, carbs: 0, fats: 13, fiber: 0 },
-{ name: 'جناح الدجاج المشوي', calories: 215, protein: 23, carbs: 0, fats: 14, fiber: 0 },
-{ name: 'لحم البقر المطبوخ', calories: 250, protein: 26, carbs: 0, fats: 15, fiber: 0 },
-{ name: 'لحم البقر 15‎%‎ شحم ومشوي', calories: 275, protein: 26, carbs: 0, fats: 18, fiber: 0 },
-{ name: 'لحم الغنم المطبوخ', calories: 294, protein: 25, carbs: 0, fats: 21, fiber: 0 },
-{ name: 'لحم الغنم المشوي', calories: 282, protein: 26, carbs: 0, fats: 19, fiber: 0 },
-{ name: 'كبدة الدجاج المطبوخة', calories: 105, protein: 16, carbs: 0, fats: 4, fiber: 0 },
-{ name: 'كبد البقر المشوي', calories: 191, protein: 27, carbs: 5, fats: 6, fiber: 0 },
-{ name: 'جبن المرتديلا', calories: 308, protein: 15, carbs: 1, fats: 26, fiber: 0 },
-{ name: 'النقانق', calories: 301, protein: 11, carbs: 2, fats: 28, fiber: 0 },
-{ name: 'بيض مقلي بزيت', calories: 196, protein: 13, carbs: 1, fats: 15, fiber: 0 },
-{ name: 'البيبروني', calories: 494, protein: 19, carbs: 1, fats: 44, fiber: 0 },
-{ name: 'الباسطرمة', calories: 310, protein: 25, carbs: 2, fats: 22, fiber: 0 },
-{ name: 'التونة بالماء', calories: 116, protein: 25, carbs: 0, fats: 1, fiber: 0 },
-{ name: 'التونة بالزيت النباتي', calories: 198, protein: 23, carbs: 0, fats: 11, fiber: 0 },
-{ name: 'التونة بزيت الزيتون', calories: 202, protein: 22, carbs: 0, fats: 12, fiber: 0 },
-{ name: 'سمك الفيليه المشوي', calories: 142, protein: 24, carbs: 0, fats: 4, fiber: 0 },
-{ name: 'سمك السلمون المشوي', calories: 206, protein: 22, carbs: 0, fats: 13, fiber: 0 },
-{ name: 'سمك الجري المشوي', calories: 178, protein: 24, carbs: 0, fats: 8, fiber: 0 },
-{ name: 'سمك السردين المعلب بالزيت', calories: 208, protein: 24, carbs: 0, fats: 12, fiber: 0 },
-{ name: 'الروبيان المشوي', calories: 99, protein: 24, carbs: 0, fats: 1, fiber: 0 },
-{ name: 'الروبيان المقلي', calories: 242, protein: 23, carbs: 12, fats: 12, fiber: 0 },
-{ name: 'الروبيان المطبوخ', calories: 106, protein: 24, carbs: 0, fats: 1, fiber: 0 },
-{ name: 'الفاصوليا الخضراء المطبوخة', calories: 44, protein: 2, carbs: 10, fats: 0, fiber: 4 },
-{ name: 'الفاصوليا البيضاء المطبوخة بالمرق الأحمر', calories: 150, protein: 8, carbs: 27, fats: 1, fiber: 10 },
-{ name: 'اللوبيا المطبوخة', calories: 120, protein: 7, carbs: 22, fats: 1, fiber: 6 },
-{ name: 'سمك ماكريل بالزيت النباتي', calories: 275, protein: 24, carbs: 0, fats: 20, fiber: 0 },
-{ name: 'زبادي يوناني', calories: 59, protein: 10, carbs: 4, fats: 0, fiber: 0 },
-{ name: 'حليب كامل الدسم', calories: 61, protein: 3, carbs: 5, fats: 3, fiber: 0 },
-{ name: 'حليب نصف دسم', calories: 48, protein: 3, carbs: 5, fats: 1, fiber: 0 },
-{ name: 'حليب خالي الدسم', calories: 34, protein: 3, carbs: 5, fats: 0, fiber: 0 },
-{ name: 'حليب مكثف', calories: 321, protein: 8, carbs: 55, fats: 8, fiber: 0 },
-{ name: 'جبنة المرعي خالي الدسم', calories: 30, protein: 5, carbs: 2, fats: 0, fiber: 0 },
-{ name: 'جبنة مثلثات', calories: 50, protein: 2, carbs: 1, fats: 4, fiber: 0 },
-{ name: 'القشطة', calories: 292, protein: 2, carbs: 4, fats: 31, fiber: 0 },
-{ name: 'ايس كريم', calories: 207, protein: 4, carbs: 24, fats: 11, fiber: 0 },
-{ name: 'الشيز كيك', calories: 321, protein: 6, carbs: 31, fats: 20, fiber: 1 },
-{ name: 'الكنافة', calories: 320, protein: 5, carbs: 40, fats: 16, fiber: 1 },
-{ name: 'المربى', calories: 250, protein: 0, carbs: 65, fats: 0, fiber: 1 },
-{ name: 'المربى دايت', calories: 10, protein: 0, carbs: 3, fats: 0, fiber: 0 },
-{ name: 'النوتيلا', calories: 530, protein: 6, carbs: 57, fats: 31, fiber: 3 },
-{ name: 'الحمص المطبوخ', calories: 164, protein: 9, carbs: 27, fats: 3, fiber: 8 },
-{ name: 'الباقلاء المطبوخة', calories: 71, protein: 6, carbs: 12, fats: 0.5, fiber: 5 },
-{ name: 'المعكونة مسلوقة', calories: 131, protein: 5, carbs: 25, fats: 1, fiber: 3 },
-{ name: 'خبز القمح الكامل', calories: 247, protein: 12, carbs: 43, fats: 4, fiber: 7 },
-{ name: 'كرواسون', calories: 406, protein: 8, carbs: 45, fats: 22, fiber: 2 },
-{ name: 'بطاطا مشوية', calories: 161, protein: 4, carbs: 37, fats: 0.2, fiber: 3 },
-{ name: 'الكاتشب', calories: 112, protein: 1, carbs: 27, fats: 0, fiber: 1 },
-{ name: 'المايونيز العادي', calories: 680, protein: 1, carbs: 1, fats: 75, fiber: 0 },
-{ name: 'المايونيز لايت', calories: 258, protein: 1, carbs: 10, fats: 25, fiber: 0 },
-{ name: 'السكر الابيض', calories: 387, protein: 0, carbs: 100, fats: 0, fiber: 0 },
-{ name: 'الخل', calories: 21, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'مبيض القهوة', calories: 500, protein: 1, carbs: 50, fats: 35, fiber: 0 },
-{ name: 'نسكافيه', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'عسل النحل', calories: 304, protein: 0, carbs: 82, fats: 0, fiber: 0 },
-{ name: 'دبس التمر', calories: 270, protein: 2, carbs: 74, fats: 0, fiber: 5 },
-{ name: 'كاكاو', calories: 228, protein: 19, carbs: 58, fats: 14, fiber: 33 },
-{ name: 'شوكولاته 90‎%‎ دارك', calories: 600, protein: 7, carbs: 46, fats: 43, fiber: 15 },
-{ name: 'بسكوت دايجستف', calories: 478, protein: 7, carbs: 63, fats: 21, fiber: 5 },
-{ name: 'شراب الشعير', calories: 42, protein: 0, carbs: 10, fats: 0, fiber: 0 },
-{ name: 'ذرة مشوية عالفحم', calories: 98, protein: 3, carbs: 22, fats: 1, fiber: 2 },
-{ name: 'كورن فليكس', calories: 375, protein: 7, carbs: 84, fats: 1, fiber: 3 },
-{ name: 'كريمة الطبخ', calories: 450, protein: 2, carbs: 4, fats: 47, fiber: 0 },
-{ name: 'الصاص', calories: 29, protein: 1, carbs: 7, fats: 0, fiber: 0 },
-{ name: 'العمبة العراقية', calories: 25, protein: 0, carbs: 5, fats: 0, fiber: 0 },
-{ name: 'الفلافل العراقية المقلية بالزيت', calories: 333, protein: 13, carbs: 32, fats: 19, fiber: 9 },
-{ name: 'المكسرات المشكلة', calories: 607, protein: 20, carbs: 21, fats: 55, fiber: 10 },
-{ name: 'حب الشمس', calories: 584, protein: 20, carbs: 20, fats: 51, fiber: 9 },
-{ name: 'جوز الهند', calories: 354, protein: 3, carbs: 15, fats: 33, fiber: 9 },
-{ name: 'السمسم', calories: 573, protein: 18, carbs: 23, fats: 49, fiber: 12 },
-{ name: 'اللوز المقلي', calories: 607, protein: 22, carbs: 19, fats: 55, fiber: 11 },
-{ name: 'اللوز النيء', calories: 579, protein: 21, carbs: 22, fats: 50, fiber: 12 },
-{ name: 'عصير البرتقال', calories: 45, protein: 1, carbs: 10, fats: 0, fiber: 0.2 },
-{ name: 'عصير الرمان', calories: 54, protein: 0, carbs: 14, fats: 0, fiber: 0 },
-{ name: 'التين', calories: 74, protein: 0.8, carbs: 19, fats: 0.3, fiber: 3 },
-{ name: 'القرع', calories: 26, protein: 1, carbs: 7, fats: 0.1, fiber: 1 },
-{ name: 'الزبيب', calories: 299, protein: 3.1, carbs: 79, fats: 0.5, fiber: 4 },
-{ name: 'التين المجفف', calories: 249, protein: 3, carbs: 64, fats: 1, fiber: 10 },
-{ name: 'التمر الهندي', calories: 239, protein: 2.8, carbs: 62, fats: 0.6, fiber: 5 },
-{ name: 'عصير التمر هندي', calories: 96, protein: 0.7, carbs: 23, fats: 0.1, fiber: 1 },
-{ name: 'الفجل', calories: 16, protein: 0.7, carbs: 3.4, fats: 0.1, fiber: 1.6 },
-{ name: 'البصل', calories: 40, protein: 1.1, carbs: 9.3, fats: 0.1, fiber: 1.7 },
-{ name: 'الثوم', calories: 149, protein: 6.4, carbs: 33, fats: 0.5, fiber: 2.1 },
-{ name: 'الكراث', calories: 61, protein: 1.5, carbs: 14, fats: 0.3, fiber: 1.8 },
-{ name: 'الشمندر', calories: 43, protein: 1.6, carbs: 10, fats: 0.2, fiber: 2.8 },
-{ name: 'الجرجير', calories: 25, protein: 2.6, carbs: 3.7, fats: 0.7, fiber: 1.6 },
-{ name: 'الكرفس', calories: 14, protein: 0.7, carbs: 3, fats: 0.2, fiber: 1.6 },
-{ name: 'البقدونس', calories: 36, protein: 3, carbs: 6, fats: 0.8, fiber: 3 },
-{ name: 'الجزر', calories: 41, protein: 0.9, carbs: 10, fats: 0.2, fiber: 3 },
-{ name: 'الفلفل الحاد', calories: 40, protein: 1.9, carbs: 9, fats: 0.4, fiber: 1.5 },
-{ name: 'مرق البامية', calories: 45, protein: 1.6, carbs: 7.8, fats: 1.5, fiber: 3.2 },
-{ name: 'القرنبيط', calories: 25, protein: 2, carbs: 5, fats: 0.3, fiber: 2 },
-{ name: 'الشاي العراقي بدون سكر', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'السكرين المحلى', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'فول مدمس معلب', calories: 118, protein: 6.7, carbs: 21, fats: 0.6, fiber: 6 },
-{ name: 'شوربة الخضار', calories: 70, protein: 2.4, carbs: 10, fats: 2, fiber: 2 },
-{ name: 'أرز مطبوخ', calories: 130, protein: 2.7, carbs: 28, fats: 0.3, fiber: 0.4 },
-{ name: 'بقلاوة بالجوز', calories: 550, protein: 6, carbs: 45, fats: 35, fiber: 2 },
-{ name: 'بقلاوة بالفستق', calories: 570, protein: 7, carbs: 46, fats: 37, fiber: 2.5 },
-{ name: 'كبة موصلية', calories: 220, protein: 10, carbs: 24, fats: 10, fiber: 2 },
-{ name: 'لفة فلافل عراقية', calories: 400, protein: 10, carbs: 45, fats: 20, fiber: 5 },
-{ name: 'سلطة الخضراوات', calories: 80, protein: 2, carbs: 10, fats: 3, fiber: 3 },
-{ name: 'لفة شاورما', calories: 500, protein: 25, carbs: 50, fats: 20, fiber: 4 },
-{ name: 'كاهي عراقي', calories: 350, protein: 5, carbs: 45, fats: 15, fiber: 1 },
-{ name: 'قيمر عراقي', calories: 210, protein: 3, carbs: 4, fats: 20, fiber: 0 },
-{ name: 'فشار (شامية)', calories: 375, protein: 4, carbs: 40, fats: 22, fiber: 5 },
-{ name: 'كنتاكي', calories: 450, protein: 27, carbs: 30, fats: 25, fiber: 2 },
-{ name: 'دولمة عراقية بصدور الدجاج', calories: 250, protein: 20, carbs: 30, fats: 8, fiber: 5 },
-{ name: 'كبة التمن المحشية باللحم المفروم', calories: 280, protein: 12, carbs: 35, fats: 10, fiber: 3 },
-{ name: 'كبة الجريش المحشية باللحم المفروم', calories: 260, protein: 11, carbs: 30, fats: 9, fiber: 4 },
-{ name: 'باجة عراقية', calories: 600, protein: 40, carbs: 10, fats: 45, fiber: 0 },
-{ name: 'مقادم البقر المطبوخة', calories: 320, protein: 30, carbs: 0, fats: 22, fiber: 0 },
-{ name: 'مصارين البقر المحشية بالرز واللحم المطبوخة', calories: 450, protein: 18, carbs: 40, fats: 25, fiber: 2 },
-{ name: 'بيتزا مارغريتا', calories: 250, protein: 11, carbs: 33, fats: 9, fiber: 2 },
-{ name: 'بيتزا بالبيبروني', calories: 300, protein: 13, carbs: 32, fats: 15, fiber: 2 },
-{ name: 'بيتزا باللحم والجبن', calories: 285, protein: 14, carbs: 32, fats: 12, fiber: 2 },
-{ name: 'بيتزا بالخضار والجبن', calories: 250, protein: 10, carbs: 34, fats: 9, fiber: 3 },
-{ name: 'بيتزا بالدجاج والجبن', calories: 270, protein: 15, carbs: 30, fats: 10, fiber: 2.5 },
-{ name: 'بيتزا سي فود', calories: 275, protein: 16, carbs: 30, fats: 11, fiber: 2 },
-{ name: 'بيتزا أربع أجبان', calories: 320, protein: 17, carbs: 28, fats: 18, fiber: 1.5 },
-{ name: 'بيتزا بالباذنجان والجبن', calories: 240, protein: 9, carbs: 33, fats: 8, fiber: 3 },
-{ name: 'بيتزا بالسبانخ والجبن', calories: 245, protein: 10, carbs: 32, fats: 9, fiber: 3 },
-{ name: 'بيتزا بالسلامي', calories: 310, protein: 13, carbs: 32, fats: 16, fiber: 2 },
-{ name: 'بيتزا بالأناناس والجبن', calories: 265, protein: 11, carbs: 34, fats: 10, fiber: 2 },
-{ name: 'بيتزا نباتية', calories: 230, protein: 9, carbs: 36, fats: 7, fiber: 3 }, 
-{ name: 'لبن الغنم', calories: 95, protein: 5.4, carbs: 5.1, fats: 6, fiber: 0 },
-{ name: 'لبن الجاموس', calories: 97, protein: 3.7, carbs: 4.8, fats: 7.9, fiber: 0 },
-{ name: 'بيبسي', calories: 150, protein: 0, carbs: 41, fats: 0, fiber: 0 },
-{ name: 'كوكا كولا', calories: 140, protein: 0, carbs: 39, fats: 0, fiber: 0 },
-{ name: 'بيبسي دايت', calories: 1, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'راني حبيبات', calories: 180, protein: 0.5, carbs: 45, fats: 0, fiber: 0.2 },
-{ name: 'شربت داليا', calories: 160, protein: 0, carbs: 42, fats: 0, fiber: 0 },
-{ name: 'فانتا برتقال', calories: 160, protein: 0, carbs: 44, fats: 0, fiber: 0 },
-{ name: 'ديو', calories: 170, protein: 0, carbs: 46, fats: 0, fiber: 0 },
-{ name: 'سفن اب', calories: 140, protein: 0, carbs: 39, fats: 0, fiber: 0 },
-{ name: 'الخردل', calories: 66, protein: 3.7, carbs: 5.8, fats: 4.4, fiber: 3.3 },
-{ name: 'معجون الطماطم', calories: 82, protein: 4.3, carbs: 18.9, fats: 0.5, fiber: 4.0 },
-{ name: 'الكليجة العراقية بالتمر', calories: 300, protein: 5, carbs: 50, fats: 10, fiber: 3 },
-{ name: 'الكليجة العراقية بدون تمر', calories: 250, protein: 4, carbs: 45, fats: 8, fiber: 2 },
-{ name: 'القلية العراقية', calories: 350, protein: 6, carbs: 60, fats: 12, fiber: 4 },
-{ name: 'الصمون العراقي', calories: 290, protein: 9, carbs: 54, fats: 4, fiber: 2 },
-{ name: 'الشعرية', calories: 350, protein: 10, carbs: 75, fats: 1.5, fiber: 2 },
-{ name: 'الرشدة', calories: 370, protein: 12, carbs: 78, fats: 2, fiber: 3 },
-{ name: 'بيض مسلوق بدون صفار', calories: 17, protein: 3.6, carbs: 0.2, fats: 0.1, fiber: 0 },
-{ name: 'بيض مسلوق مع الصفار', calories: 77, protein: 6.3, carbs: 0.6, fats: 5.3, fiber: 0 },
-{ name: 'لبن البقر', calories: 42, protein: 3.4, carbs: 5, fats: 1, fiber: 0 },
-{ name: 'زيتون أخضر', calories: 145, protein: 1, carbs: 3.8, fats: 15.3, fiber: 3.3 },
-{ name: 'زيتون أسود', calories: 115, protein: 0.8, carbs: 6.3, fats: 10.7, fiber: 1.6 },
-{ name: 'حمص بطحينة', calories: 166, protein: 7.9, carbs: 14.3, fats: 8.6, fiber: 6 },
-{ name: 'اللحم بعجين العراقي', calories: 280, protein: 12, carbs: 32, fats: 12, fiber: 2 },
-{ name: 'ذرة مطبوخة', calories: 96, protein: 3.4, carbs: 21, fats: 1.5, fiber: 2.4 },
-{ name: 'بصل مشوي', calories: 40, protein: 1, carbs: 9, fats: 0.1, fiber: 1.7 },
-{ name: 'طماطة مشوية', calories: 22, protein: 1.1, carbs: 4.8, fats: 0.2, fiber: 1.5 },
-{ name: 'شربت تانج أكياس تحضير سريع', calories: 80, protein: 0, carbs: 20, fats: 0, fiber: 0 },
-{ name: 'ملح باليود', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'ملح بدون يود', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'ماء', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'ملح الهمالايا', calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-{ name: 'المكدوس', calories: 150, protein: 4, carbs: 10, fats: 12, fiber: 3 },
-{ name: 'الطرشي العادي', calories: 30, protein: 1, carbs: 7, fats: 0, fiber: 2 },
-{ name: 'الطرشي المدبس', calories: 50, protein: 1, carbs: 12, fats: 0, fiber: 3 },
-{ name: 'دبس الرمان', calories: 220, protein: 0, carbs: 58, fats: 0, fiber: 0 },
-{ name: 'اللهانة المكبوسة', calories: 45, protein: 1, carbs: 10, fats: 0, fiber: 3 },
-{ name: 'الشوندر', calories: 43, protein: 1.6, carbs: 9.6, fats: 0.2, fiber: 2.4 },
-{ name: 'الشلغم المكبوس', calories: 40, protein: 1, carbs: 9, fats: 0, fiber: 3 },
-{ name: 'المخللات', calories: 20, protein: 1, carbs: 4, fats: 0, fiber: 1 },
-{ name: 'زبدة حيوانية', calories: 717, protein: 0.9, carbs: 0.1, fats: 81, fiber: 0 },
-{ name: 'دهن الحر', calories: 898, protein: 0, carbs: 0, fats: 100, fiber: 0 },
-{ name: 'زبدة نباتية', calories: 717, protein: 0.1, carbs: 0.1, fats: 81, fiber: 0 },
-{ name: 'زبدة نباتية بالكريمة', calories: 735, protein: 0.4, carbs: 1, fats: 82, fiber: 0 },
-{ name: 'جبس ليز بالجبنة الفرنسية', calories: 280, protein: 12, carbs: 26, fats: 17, fiber: 1 },
-{ name: 'واي بروتين', calories: 100, protein: 20, carbs: 2, fats: 1, fiber: 0 },
-{ name: 'ماس بروتين', calories: 120, protein: 24, carbs: 8, fats: 2, fiber: 0 },
-{ name: 'قيمة نجفية', calories: 350, protein: 20, carbs: 30, fats: 15, fiber: 5 },
-{ name: 'حلاوة الدهين النجفي', calories: 450, protein: 5, carbs: 60, fats: 20, fiber: 3 },
-{ name: 'مكمل كرياتين ATTACK CREA+', calories: 100, protein: 0, carbs: 0, fats: 0, fiber: 0 },
-    // إضافة المزيد من الأطعمة حسب الحاجة
-    ];
-
-    function searchFood() {
-        const searchValue = document.getElementById('search').value.toLowerCase();
-        const searchResults = document.getElementById('searchResults');
-        
-        if (searchValue === '') {
-            searchResults.style.display = 'none';
-            searchResults.innerHTML = '';
-            return;
+        // التحقق من القيم المدخلة
+        if (isNaN(weight) || isNaN(waist) || isNaN(neck) || isNaN(height)) {
+          alert("يرجى إدخال جميع القيم المطلوبة.");
+          return;
         }
 
-        const filteredFoods = foods.filter(food => food.name.includes(searchValue));
-        searchResults.innerHTML = '';
+        // حساب محصلة السعرات
+        let bmr = weight * 22; // احسب السعرات قبل زيادة او نقصان الوزن
+        let totalCalories = Math.round(bmr + calorieSurplus - calorieDeficit); // محصلة السعرات
 
-        filteredFoods.forEach(food => {
-            const li = document.createElement('li');
-            li.textContent = food.name;
-            li.onclick = function () {
-                document.getElementById('search').value = food.name;
-                searchResults.innerHTML = '';
-                searchResults.style.display = 'none';
-            };
-            searchResults.appendChild(li);
+        // حساب النسب الغذائية
+        let carbs = Math.round(totalCalories / 8); // احتياج الكربوهيدرات
+        let proteins = Math.round(totalCalories / 13); // احتياج البروتينات
+        let fats = Math.round(totalCalories / 48); // احتياج الدهون
+
+        // حساب نسبة الدهون في الجسم باستخدام معادلة البحرية الأمريكية
+        let bodyFatPercentage;
+        if (gender === "ذكر") {
+          bodyFatPercentage = (
+            86.01 * Math.log10(waist - neck) -
+            70.041 * Math.log10(height) +
+            36.76
+          ).toFixed(1); // رقم عشري واحد بعد الفارزة
+        } else {
+          bodyFatPercentage = (
+            163.205 * Math.log10(waist + hip - neck) -
+            97.684 * Math.log10(height) -
+            78.387
+          ).toFixed(1); // رقم عشري واحد بعد الفارزة
+        }
+
+        // التحقق من القيمة الناتجة عن نسبة الدهون
+        bodyFatPercentage = isNaN(bodyFatPercentage)
+          ? "N/A"
+          : parseFloat(bodyFatPercentage).toFixed(1); // إذا كانت النتيجة غير صالحة، ضع "N/A"
+
+        // عرض النتائج
+        document.getElementById("totalCalories").textContent = totalCalories;
+        document.getElementById("calorieLimit").value = parseInt(totalCalories);
+        document.getElementById("carbs").textContent = carbs;
+        document.getElementById("carbLimit").value = parseInt(carbs);
+        document.getElementById("proteins").textContent = proteins;
+        document.getElementById("proteinLimit").value = parseInt(proteins);
+        document.getElementById("fats").textContent = fats;
+        document.getElementById("fatLimit").value = parseInt(fats);
+        document.getElementById("bodyFatPercentage").textContent =
+          bodyFatPercentage;
+      }
+
+      function resetForm() {
+        document.getElementById("weight").value = "";
+        document.getElementById("calorie_deficit").value = "";
+        document.getElementById("calorie_surplus").value = "";
+        document.getElementById("waist").value = "";
+        document.getElementById("neck").value = "";
+        document.getElementById("height").value = "";
+        document.getElementById("hip").value = "";
+        document.getElementById("totalCalories").textContent = "";
+        document.getElementById("carbs").textContent = "";
+        document.getElementById("proteins").textContent = "";
+        document.getElementById("fats").textContent = "";
+        document.getElementById("bodyFatPercentage").textContent = "";
+      }
+
+      function toggleHipMeasurement() {
+        const hipMeasurementContainer = document.getElementById(
+          "hipMeasurementContainer"
+        );
+        hipMeasurementContainer.style.display =
+          document.getElementById("gender").value === "أنثى" ? "block" : "none";
+      }
+
+      // إضافة حدث للنقر على الزر القابل للتوسيع
+      const coll = document.getElementsByClassName("collapsible");
+      for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+          this.classList.toggle("active");
+          const content = this.nextElementSibling;
+          if (content.style.display === "block") {
+            content.style.display = "none";
+          } else {
+            content.style.display = "block";
+          }
+        });
+      }
+
+      let selectedFoods = [];
+
+      const foods = [
+        {
+          name: "موز",
+          calories: 89,
+          protein: 1.1,
+          carbs: 23,
+          fats: 0.3,
+          fiber: 2.6,
+        },
+        {
+          name: "تفاح",
+          calories: 52,
+          protein: 0.3,
+          carbs: 14,
+          fats: 0.2,
+          fiber: 2.4,
+        },
+        {
+          name: "برتقال",
+          calories: 47,
+          protein: 0.9,
+          carbs: 12,
+          fats: 0.1,
+          fiber: 2.4,
+        },
+        {
+          name: "عنب",
+          calories: 69,
+          protein: 0.6,
+          carbs: 18,
+          fats: 0.2,
+          fiber: 0.9,
+        },
+        {
+          name: "فراولة",
+          calories: 32,
+          protein: 0.7,
+          carbs: 7.7,
+          fats: 0.3,
+          fiber: 2.0,
+        },
+        {
+          name: "كيوي",
+          calories: 61,
+          protein: 1.1,
+          carbs: 15,
+          fats: 0.5,
+          fiber: 3.0,
+        },
+        {
+          name: "أناناس",
+          calories: 50,
+          protein: 0.5,
+          carbs: 13,
+          fats: 0.1,
+          fiber: 1.4,
+        },
+        {
+          name: "خوخ",
+          calories: 39,
+          protein: 0.9,
+          carbs: 10,
+          fats: 0.3,
+          fiber: 1.5,
+        },
+        {
+          name: "جريب فروت",
+          calories: 42,
+          protein: 0.8,
+          carbs: 11,
+          fats: 0.1,
+          fiber: 1.4,
+        },
+        {
+          name: "مشمش",
+          calories: 48,
+          protein: 1.4,
+          carbs: 12,
+          fats: 0.1,
+          fiber: 2.0,
+        },
+        {
+          name: "تين",
+          calories: 74,
+          protein: 0.8,
+          carbs: 19,
+          fats: 0.3,
+          fiber: 2.9,
+        },
+        {
+          name: "رمان",
+          calories: 83,
+          protein: 1.7,
+          carbs: 19,
+          fats: 1.2,
+          fiber: 4.0,
+        },
+        {
+          name: "بطيخ",
+          calories: 30,
+          protein: 0.6,
+          carbs: 8,
+          fats: 0.2,
+          fiber: 0.4,
+        },
+        {
+          name: "يوسفي",
+          calories: 53,
+          protein: 0.8,
+          carbs: 13,
+          fats: 0.3,
+          fiber: 1.8,
+        },
+        {
+          name: "بلوبيري",
+          calories: 57,
+          protein: 0.7,
+          carbs: 14,
+          fats: 0.3,
+          fiber: 2.4,
+        },
+        {
+          name: "روز بيري",
+          calories: 57,
+          protein: 1.2,
+          carbs: 14,
+          fats: 0.3,
+          fiber: 6.5,
+        },
+        {
+          name: "خس",
+          calories: 15,
+          protein: 1.4,
+          carbs: 2.9,
+          fats: 0.2,
+          fiber: 1.3,
+        },
+        {
+          name: "طماطم",
+          calories: 18,
+          protein: 0.9,
+          carbs: 3.9,
+          fats: 0.2,
+          fiber: 1.2,
+        },
+        {
+          name: "خيار",
+          calories: 16,
+          protein: 0.7,
+          carbs: 3.6,
+          fats: 0.1,
+          fiber: 0.5,
+        },
+        {
+          name: "جزر",
+          calories: 41,
+          protein: 0.9,
+          carbs: 10,
+          fats: 0.2,
+          fiber: 2.8,
+        },
+        {
+          name: "بطاطس مسلوقة",
+          calories: 87,
+          protein: 2,
+          carbs: 20,
+          fats: 0.1,
+          fiber: 1.8,
+        },
+        {
+          name: "بروكلي",
+          calories: 34,
+          protein: 2.8,
+          carbs: 7,
+          fats: 0.4,
+          fiber: 2.6,
+        },
+        {
+          name: "سبانخ",
+          calories: 23,
+          protein: 2.9,
+          carbs: 3.6,
+          fats: 0.4,
+          fiber: 2.2,
+        },
+        {
+          name: "قرنبيط",
+          calories: 25,
+          protein: 1.9,
+          carbs: 5,
+          fats: 0.3,
+          fiber: 2.0,
+        },
+        {
+          name: "فلفل رومي",
+          calories: 31,
+          protein: 1,
+          carbs: 6,
+          fats: 0.3,
+          fiber: 2.1,
+        },
+        {
+          name: "فطر",
+          calories: 22,
+          protein: 3.1,
+          carbs: 3.3,
+          fats: 0.3,
+          fiber: 1.0,
+        },
+        {
+          name: "باذنجان مقلي",
+          calories: 271,
+          protein: 1.0,
+          carbs: 16.0,
+          fats: 22.0,
+          fiber: 2.5,
+        },
+        {
+          name: "باذنجان مشوي",
+          calories: 35,
+          protein: 0.8,
+          carbs: 8.7,
+          fats: 0.2,
+          fiber: 2.5,
+        },
+        {
+          name: "بطاطا حلوة",
+          calories: 86,
+          protein: 1.6,
+          carbs: 20,
+          fats: 0.1,
+          fiber: 3.0,
+        },
+        {
+          name: "كوسا",
+          calories: 17,
+          protein: 1.2,
+          carbs: 3.1,
+          fats: 0.2,
+          fiber: 1.0,
+        },
+        {
+          name: "عدس مطبوخ",
+          calories: 116,
+          protein: 9,
+          carbs: 20,
+          fats: 0.4,
+          fiber: 7.9,
+        },
+        {
+          name: "حمص مطبوخ",
+          calories: 164,
+          protein: 8.9,
+          carbs: 27,
+          fats: 2.6,
+          fiber: 7.6,
+        },
+        {
+          name: "فاصولياء مطبوخة",
+          calories: 127,
+          protein: 8.7,
+          carbs: 23,
+          fats: 0.5,
+          fiber: 6.4,
+        },
+        {
+          name: "بازلاء مطبوخة",
+          calories: 81,
+          protein: 5.4,
+          carbs: 14,
+          fats: 0.4,
+          fiber: 5.7,
+        },
+        {
+          name: "فول مطبوخ",
+          calories: 127,
+          protein: 8.3,
+          carbs: 22,
+          fats: 0.6,
+          fiber: 9.4,
+        },
+        {
+          name: "طحينية",
+          calories: 595,
+          protein: 17,
+          carbs: 20,
+          fats: 53,
+          fiber: 8.0,
+        },
+        {
+          name: "زيت زيتون",
+          calories: 884,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زيت عباد الشمس",
+          calories: 884,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زيت جوز الهند",
+          calories: 892,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زيت الذرة",
+          calories: 900,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زيت الكانولا",
+          calories: 884,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زيت السمسم",
+          calories: 884,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زيت الفول السوداني",
+          calories: 884,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "أرز مسلوق (تمن مبزول) ",
+          calories: 130,
+          protein: 2.7,
+          carbs: 28,
+          fats: 0.3,
+          fiber: 0.4,
+        },
+        {
+          name: "معكرونة مسلوقة",
+          calories: 158,
+          protein: 5.8,
+          carbs: 31,
+          fats: 0.9,
+          fiber: 1.8,
+        },
+        {
+          name: "خبز أبيض",
+          calories: 265,
+          protein: 9,
+          carbs: 49,
+          fats: 3.2,
+          fiber: 2.7,
+        },
+        {
+          name: "خبز أسمر",
+          calories: 247,
+          protein: 9,
+          carbs: 43,
+          fats: 3.3,
+          fiber: 7.0,
+        },
+        {
+          name: "خبز الشوفان",
+          calories: 247,
+          protein: 9,
+          carbs: 42,
+          fats: 4.2,
+          fiber: 8.0,
+        },
+        {
+          name: "خبز اللوز",
+          calories: 535,
+          protein: 21,
+          carbs: 20,
+          fats: 47,
+          fiber: 12.5,
+        },
+        {
+          name: "خبز الشعير",
+          calories: 250,
+          protein: 9,
+          carbs: 45,
+          fats: 2.5,
+          fiber: 8.0,
+        },
+        {
+          name: "خبز الذرة",
+          calories: 321,
+          protein: 9.2,
+          carbs: 72,
+          fats: 4.3,
+          fiber: 7.3,
+        },
+        {
+          name: "برغل مطبوخ",
+          calories: 83,
+          protein: 3.1,
+          carbs: 18.6,
+          fats: 0.2,
+          fiber: 4.5,
+        },
+        {
+          name: "صدر دجاج مطبوخ",
+          calories: 165,
+          protein: 31,
+          carbs: 0,
+          fats: 3.6,
+          fiber: 0,
+        },
+        {
+          name: "صدر دجاج مشوي",
+          calories: 165,
+          protein: 31,
+          carbs: 0,
+          fats: 3.6,
+          fiber: 0,
+        },
+        {
+          name: "تمر",
+          calories: 277,
+          protein: 2,
+          carbs: 75,
+          fats: 0.2,
+          fiber: 7,
+        },
+        {
+          name: "فخذ الدجاج المطبوخ",
+          calories: 190,
+          protein: 24,
+          carbs: 0,
+          fats: 10,
+          fiber: 0,
+        },
+        {
+          name: "جناح الدجاج المطبوخ",
+          calories: 203,
+          protein: 23,
+          carbs: 0,
+          fats: 13,
+          fiber: 0,
+        },
+        {
+          name: "جناح الدجاج المشوي",
+          calories: 215,
+          protein: 23,
+          carbs: 0,
+          fats: 14,
+          fiber: 0,
+        },
+        {
+          name: "لحم البقر المطبوخ",
+          calories: 250,
+          protein: 26,
+          carbs: 0,
+          fats: 15,
+          fiber: 0,
+        },
+        {
+          name: "لحم البقر 15‎%‎ شحم ومشوي",
+          calories: 275,
+          protein: 26,
+          carbs: 0,
+          fats: 18,
+          fiber: 0,
+        },
+        {
+          name: "لحم الغنم المطبوخ",
+          calories: 294,
+          protein: 25,
+          carbs: 0,
+          fats: 21,
+          fiber: 0,
+        },
+        {
+          name: "لحم الغنم المشوي",
+          calories: 282,
+          protein: 26,
+          carbs: 0,
+          fats: 19,
+          fiber: 0,
+        },
+        {
+          name: "كبدة الدجاج المطبوخة",
+          calories: 105,
+          protein: 16,
+          carbs: 0,
+          fats: 4,
+          fiber: 0,
+        },
+        {
+          name: "كبد البقر المشوي",
+          calories: 191,
+          protein: 27,
+          carbs: 5,
+          fats: 6,
+          fiber: 0,
+        },
+        {
+          name: "جبن المرتديلا",
+          calories: 308,
+          protein: 15,
+          carbs: 1,
+          fats: 26,
+          fiber: 0,
+        },
+        {
+          name: "النقانق",
+          calories: 301,
+          protein: 11,
+          carbs: 2,
+          fats: 28,
+          fiber: 0,
+        },
+        {
+          name: "بيض مقلي بزيت",
+          calories: 196,
+          protein: 13,
+          carbs: 1,
+          fats: 15,
+          fiber: 0,
+        },
+        {
+          name: "البيبروني",
+          calories: 494,
+          protein: 19,
+          carbs: 1,
+          fats: 44,
+          fiber: 0,
+        },
+        {
+          name: "الباسطرمة",
+          calories: 310,
+          protein: 25,
+          carbs: 2,
+          fats: 22,
+          fiber: 0,
+        },
+        {
+          name: "التونة بالماء",
+          calories: 116,
+          protein: 25,
+          carbs: 0,
+          fats: 1,
+          fiber: 0,
+        },
+        {
+          name: "التونة بالزيت النباتي",
+          calories: 198,
+          protein: 23,
+          carbs: 0,
+          fats: 11,
+          fiber: 0,
+        },
+        {
+          name: "التونة بزيت الزيتون",
+          calories: 202,
+          protein: 22,
+          carbs: 0,
+          fats: 12,
+          fiber: 0,
+        },
+        {
+          name: "سمك الفيليه المشوي",
+          calories: 142,
+          protein: 24,
+          carbs: 0,
+          fats: 4,
+          fiber: 0,
+        },
+        {
+          name: "سمك السلمون المشوي",
+          calories: 206,
+          protein: 22,
+          carbs: 0,
+          fats: 13,
+          fiber: 0,
+        },
+        {
+          name: "سمك الجري المشوي",
+          calories: 178,
+          protein: 24,
+          carbs: 0,
+          fats: 8,
+          fiber: 0,
+        },
+        {
+          name: "سمك السردين المعلب بالزيت",
+          calories: 208,
+          protein: 24,
+          carbs: 0,
+          fats: 12,
+          fiber: 0,
+        },
+        {
+          name: "الروبيان المشوي",
+          calories: 99,
+          protein: 24,
+          carbs: 0,
+          fats: 1,
+          fiber: 0,
+        },
+        {
+          name: "الروبيان المقلي",
+          calories: 242,
+          protein: 23,
+          carbs: 12,
+          fats: 12,
+          fiber: 0,
+        },
+        {
+          name: "الروبيان المطبوخ",
+          calories: 106,
+          protein: 24,
+          carbs: 0,
+          fats: 1,
+          fiber: 0,
+        },
+        {
+          name: "الفاصوليا الخضراء المطبوخة",
+          calories: 44,
+          protein: 2,
+          carbs: 10,
+          fats: 0,
+          fiber: 4,
+        },
+        {
+          name: "الفاصوليا البيضاء المطبوخة بالمرق الأحمر",
+          calories: 150,
+          protein: 8,
+          carbs: 27,
+          fats: 1,
+          fiber: 10,
+        },
+        {
+          name: "اللوبيا المطبوخة",
+          calories: 120,
+          protein: 7,
+          carbs: 22,
+          fats: 1,
+          fiber: 6,
+        },
+        {
+          name: "سمك ماكريل بالزيت النباتي",
+          calories: 275,
+          protein: 24,
+          carbs: 0,
+          fats: 20,
+          fiber: 0,
+        },
+        {
+          name: "زبادي يوناني",
+          calories: 59,
+          protein: 10,
+          carbs: 4,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "حليب كامل الدسم",
+          calories: 61,
+          protein: 3,
+          carbs: 5,
+          fats: 3,
+          fiber: 0,
+        },
+        {
+          name: "حليب نصف دسم",
+          calories: 48,
+          protein: 3,
+          carbs: 5,
+          fats: 1,
+          fiber: 0,
+        },
+        {
+          name: "حليب خالي الدسم",
+          calories: 34,
+          protein: 3,
+          carbs: 5,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "حليب مكثف",
+          calories: 321,
+          protein: 8,
+          carbs: 55,
+          fats: 8,
+          fiber: 0,
+        },
+        {
+          name: "جبنة المرعي خالي الدسم",
+          calories: 30,
+          protein: 5,
+          carbs: 2,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "جبنة مثلثات",
+          calories: 50,
+          protein: 2,
+          carbs: 1,
+          fats: 4,
+          fiber: 0,
+        },
+        {
+          name: "القشطة",
+          calories: 292,
+          protein: 2,
+          carbs: 4,
+          fats: 31,
+          fiber: 0,
+        },
+        {
+          name: "ايس كريم",
+          calories: 207,
+          protein: 4,
+          carbs: 24,
+          fats: 11,
+          fiber: 0,
+        },
+        {
+          name: "الشيز كيك",
+          calories: 321,
+          protein: 6,
+          carbs: 31,
+          fats: 20,
+          fiber: 1,
+        },
+        {
+          name: "الكنافة",
+          calories: 320,
+          protein: 5,
+          carbs: 40,
+          fats: 16,
+          fiber: 1,
+        },
+        {
+          name: "المربى",
+          calories: 250,
+          protein: 0,
+          carbs: 65,
+          fats: 0,
+          fiber: 1,
+        },
+        {
+          name: "المربى دايت",
+          calories: 10,
+          protein: 0,
+          carbs: 3,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "النوتيلا",
+          calories: 530,
+          protein: 6,
+          carbs: 57,
+          fats: 31,
+          fiber: 3,
+        },
+        {
+          name: "الحمص المطبوخ",
+          calories: 164,
+          protein: 9,
+          carbs: 27,
+          fats: 3,
+          fiber: 8,
+        },
+        {
+          name: "الباقلاء المطبوخة",
+          calories: 71,
+          protein: 6,
+          carbs: 12,
+          fats: 0.5,
+          fiber: 5,
+        },
+        {
+          name: "المعكونة مسلوقة",
+          calories: 131,
+          protein: 5,
+          carbs: 25,
+          fats: 1,
+          fiber: 3,
+        },
+        {
+          name: "خبز القمح الكامل",
+          calories: 247,
+          protein: 12,
+          carbs: 43,
+          fats: 4,
+          fiber: 7,
+        },
+        {
+          name: "كرواسون",
+          calories: 406,
+          protein: 8,
+          carbs: 45,
+          fats: 22,
+          fiber: 2,
+        },
+        {
+          name: "بطاطا مشوية",
+          calories: 161,
+          protein: 4,
+          carbs: 37,
+          fats: 0.2,
+          fiber: 3,
+        },
+        {
+          name: "الكاتشب",
+          calories: 112,
+          protein: 1,
+          carbs: 27,
+          fats: 0,
+          fiber: 1,
+        },
+        {
+          name: "المايونيز العادي",
+          calories: 680,
+          protein: 1,
+          carbs: 1,
+          fats: 75,
+          fiber: 0,
+        },
+        {
+          name: "المايونيز لايت",
+          calories: 258,
+          protein: 1,
+          carbs: 10,
+          fats: 25,
+          fiber: 0,
+        },
+        {
+          name: "السكر الابيض",
+          calories: 387,
+          protein: 0,
+          carbs: 100,
+          fats: 0,
+          fiber: 0,
+        },
+        { name: "الخل", calories: 21, protein: 0, carbs: 0, fats: 0, fiber: 0 },
+        {
+          name: "مبيض القهوة",
+          calories: 500,
+          protein: 1,
+          carbs: 50,
+          fats: 35,
+          fiber: 0,
+        },
+        {
+          name: "نسكافيه",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "عسل النحل",
+          calories: 304,
+          protein: 0,
+          carbs: 82,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "دبس التمر",
+          calories: 270,
+          protein: 2,
+          carbs: 74,
+          fats: 0,
+          fiber: 5,
+        },
+        {
+          name: "كاكاو",
+          calories: 228,
+          protein: 19,
+          carbs: 58,
+          fats: 14,
+          fiber: 33,
+        },
+        {
+          name: "شوكولاته 90‎%‎ دارك",
+          calories: 600,
+          protein: 7,
+          carbs: 46,
+          fats: 43,
+          fiber: 15,
+        },
+        {
+          name: "بسكوت دايجستف",
+          calories: 478,
+          protein: 7,
+          carbs: 63,
+          fats: 21,
+          fiber: 5,
+        },
+        {
+          name: "شراب الشعير",
+          calories: 42,
+          protein: 0,
+          carbs: 10,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "ذرة مشوية عالفحم",
+          calories: 98,
+          protein: 3,
+          carbs: 22,
+          fats: 1,
+          fiber: 2,
+        },
+        {
+          name: "كورن فليكس",
+          calories: 375,
+          protein: 7,
+          carbs: 84,
+          fats: 1,
+          fiber: 3,
+        },
+        {
+          name: "كريمة الطبخ",
+          calories: 450,
+          protein: 2,
+          carbs: 4,
+          fats: 47,
+          fiber: 0,
+        },
+        {
+          name: "الصاص",
+          calories: 29,
+          protein: 1,
+          carbs: 7,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "العمبة العراقية",
+          calories: 25,
+          protein: 0,
+          carbs: 5,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "الفلافل العراقية المقلية بالزيت",
+          calories: 333,
+          protein: 13,
+          carbs: 32,
+          fats: 19,
+          fiber: 9,
+        },
+        {
+          name: "المكسرات المشكلة",
+          calories: 607,
+          protein: 20,
+          carbs: 21,
+          fats: 55,
+          fiber: 10,
+        },
+        {
+          name: "حب الشمس",
+          calories: 584,
+          protein: 20,
+          carbs: 20,
+          fats: 51,
+          fiber: 9,
+        },
+        {
+          name: "جوز الهند",
+          calories: 354,
+          protein: 3,
+          carbs: 15,
+          fats: 33,
+          fiber: 9,
+        },
+        {
+          name: "السمسم",
+          calories: 573,
+          protein: 18,
+          carbs: 23,
+          fats: 49,
+          fiber: 12,
+        },
+        {
+          name: "اللوز المقلي",
+          calories: 607,
+          protein: 22,
+          carbs: 19,
+          fats: 55,
+          fiber: 11,
+        },
+        {
+          name: "اللوز النيء",
+          calories: 579,
+          protein: 21,
+          carbs: 22,
+          fats: 50,
+          fiber: 12,
+        },
+        {
+          name: "عصير البرتقال",
+          calories: 45,
+          protein: 1,
+          carbs: 10,
+          fats: 0,
+          fiber: 0.2,
+        },
+        {
+          name: "عصير الرمان",
+          calories: 54,
+          protein: 0,
+          carbs: 14,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "التين",
+          calories: 74,
+          protein: 0.8,
+          carbs: 19,
+          fats: 0.3,
+          fiber: 3,
+        },
+        {
+          name: "القرع",
+          calories: 26,
+          protein: 1,
+          carbs: 7,
+          fats: 0.1,
+          fiber: 1,
+        },
+        {
+          name: "الزبيب",
+          calories: 299,
+          protein: 3.1,
+          carbs: 79,
+          fats: 0.5,
+          fiber: 4,
+        },
+        {
+          name: "التين المجفف",
+          calories: 249,
+          protein: 3,
+          carbs: 64,
+          fats: 1,
+          fiber: 10,
+        },
+        {
+          name: "التمر الهندي",
+          calories: 239,
+          protein: 2.8,
+          carbs: 62,
+          fats: 0.6,
+          fiber: 5,
+        },
+        {
+          name: "عصير التمر هندي",
+          calories: 96,
+          protein: 0.7,
+          carbs: 23,
+          fats: 0.1,
+          fiber: 1,
+        },
+        {
+          name: "الفجل",
+          calories: 16,
+          protein: 0.7,
+          carbs: 3.4,
+          fats: 0.1,
+          fiber: 1.6,
+        },
+        {
+          name: "البصل",
+          calories: 40,
+          protein: 1.1,
+          carbs: 9.3,
+          fats: 0.1,
+          fiber: 1.7,
+        },
+        {
+          name: "الثوم",
+          calories: 149,
+          protein: 6.4,
+          carbs: 33,
+          fats: 0.5,
+          fiber: 2.1,
+        },
+        {
+          name: "الكراث",
+          calories: 61,
+          protein: 1.5,
+          carbs: 14,
+          fats: 0.3,
+          fiber: 1.8,
+        },
+        {
+          name: "الشمندر",
+          calories: 43,
+          protein: 1.6,
+          carbs: 10,
+          fats: 0.2,
+          fiber: 2.8,
+        },
+        {
+          name: "الجرجير",
+          calories: 25,
+          protein: 2.6,
+          carbs: 3.7,
+          fats: 0.7,
+          fiber: 1.6,
+        },
+        {
+          name: "الكرفس",
+          calories: 14,
+          protein: 0.7,
+          carbs: 3,
+          fats: 0.2,
+          fiber: 1.6,
+        },
+        {
+          name: "البقدونس",
+          calories: 36,
+          protein: 3,
+          carbs: 6,
+          fats: 0.8,
+          fiber: 3,
+        },
+        {
+          name: "الجزر",
+          calories: 41,
+          protein: 0.9,
+          carbs: 10,
+          fats: 0.2,
+          fiber: 3,
+        },
+        {
+          name: "الفلفل الحاد",
+          calories: 40,
+          protein: 1.9,
+          carbs: 9,
+          fats: 0.4,
+          fiber: 1.5,
+        },
+        {
+          name: "مرق البامية",
+          calories: 45,
+          protein: 1.6,
+          carbs: 7.8,
+          fats: 1.5,
+          fiber: 3.2,
+        },
+        {
+          name: "القرنبيط",
+          calories: 25,
+          protein: 2,
+          carbs: 5,
+          fats: 0.3,
+          fiber: 2,
+        },
+        {
+          name: "الشاي العراقي بدون سكر",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "السكرين المحلى",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "فول مدمس معلب",
+          calories: 118,
+          protein: 6.7,
+          carbs: 21,
+          fats: 0.6,
+          fiber: 6,
+        },
+        {
+          name: "شوربة الخضار",
+          calories: 70,
+          protein: 2.4,
+          carbs: 10,
+          fats: 2,
+          fiber: 2,
+        },
+        {
+          name: "أرز مطبوخ",
+          calories: 130,
+          protein: 2.7,
+          carbs: 28,
+          fats: 0.3,
+          fiber: 0.4,
+        },
+        {
+          name: "بقلاوة بالجوز",
+          calories: 550,
+          protein: 6,
+          carbs: 45,
+          fats: 35,
+          fiber: 2,
+        },
+        {
+          name: "بقلاوة بالفستق",
+          calories: 570,
+          protein: 7,
+          carbs: 46,
+          fats: 37,
+          fiber: 2.5,
+        },
+        {
+          name: "كبة موصلية",
+          calories: 220,
+          protein: 10,
+          carbs: 24,
+          fats: 10,
+          fiber: 2,
+        },
+        {
+          name: "لفة فلافل عراقية",
+          calories: 400,
+          protein: 10,
+          carbs: 45,
+          fats: 20,
+          fiber: 5,
+        },
+        {
+          name: "سلطة الخضراوات",
+          calories: 80,
+          protein: 2,
+          carbs: 10,
+          fats: 3,
+          fiber: 3,
+        },
+        {
+          name: "لفة شاورما",
+          calories: 500,
+          protein: 25,
+          carbs: 50,
+          fats: 20,
+          fiber: 4,
+        },
+        {
+          name: "كاهي عراقي",
+          calories: 350,
+          protein: 5,
+          carbs: 45,
+          fats: 15,
+          fiber: 1,
+        },
+        {
+          name: "قيمر عراقي",
+          calories: 210,
+          protein: 3,
+          carbs: 4,
+          fats: 20,
+          fiber: 0,
+        },
+        {
+          name: "فشار (شامية)",
+          calories: 375,
+          protein: 4,
+          carbs: 40,
+          fats: 22,
+          fiber: 5,
+        },
+        {
+          name: "كنتاكي",
+          calories: 450,
+          protein: 27,
+          carbs: 30,
+          fats: 25,
+          fiber: 2,
+        },
+        {
+          name: "دولمة عراقية بصدور الدجاج",
+          calories: 250,
+          protein: 20,
+          carbs: 30,
+          fats: 8,
+          fiber: 5,
+        },
+        {
+          name: "كبة التمن المحشية باللحم المفروم",
+          calories: 280,
+          protein: 12,
+          carbs: 35,
+          fats: 10,
+          fiber: 3,
+        },
+        {
+          name: "كبة الجريش المحشية باللحم المفروم",
+          calories: 260,
+          protein: 11,
+          carbs: 30,
+          fats: 9,
+          fiber: 4,
+        },
+        {
+          name: "باجة عراقية",
+          calories: 600,
+          protein: 40,
+          carbs: 10,
+          fats: 45,
+          fiber: 0,
+        },
+        {
+          name: "مقادم البقر المطبوخة",
+          calories: 320,
+          protein: 30,
+          carbs: 0,
+          fats: 22,
+          fiber: 0,
+        },
+        {
+          name: "مصارين البقر المحشية بالرز واللحم المطبوخة",
+          calories: 450,
+          protein: 18,
+          carbs: 40,
+          fats: 25,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا مارغريتا",
+          calories: 250,
+          protein: 11,
+          carbs: 33,
+          fats: 9,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا بالبيبروني",
+          calories: 300,
+          protein: 13,
+          carbs: 32,
+          fats: 15,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا باللحم والجبن",
+          calories: 285,
+          protein: 14,
+          carbs: 32,
+          fats: 12,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا بالخضار والجبن",
+          calories: 250,
+          protein: 10,
+          carbs: 34,
+          fats: 9,
+          fiber: 3,
+        },
+        {
+          name: "بيتزا بالدجاج والجبن",
+          calories: 270,
+          protein: 15,
+          carbs: 30,
+          fats: 10,
+          fiber: 2.5,
+        },
+        {
+          name: "بيتزا سي فود",
+          calories: 275,
+          protein: 16,
+          carbs: 30,
+          fats: 11,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا أربع أجبان",
+          calories: 320,
+          protein: 17,
+          carbs: 28,
+          fats: 18,
+          fiber: 1.5,
+        },
+        {
+          name: "بيتزا بالباذنجان والجبن",
+          calories: 240,
+          protein: 9,
+          carbs: 33,
+          fats: 8,
+          fiber: 3,
+        },
+        {
+          name: "بيتزا بالسبانخ والجبن",
+          calories: 245,
+          protein: 10,
+          carbs: 32,
+          fats: 9,
+          fiber: 3,
+        },
+        {
+          name: "بيتزا بالسلامي",
+          calories: 310,
+          protein: 13,
+          carbs: 32,
+          fats: 16,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا بالأناناس والجبن",
+          calories: 265,
+          protein: 11,
+          carbs: 34,
+          fats: 10,
+          fiber: 2,
+        },
+        {
+          name: "بيتزا نباتية",
+          calories: 230,
+          protein: 9,
+          carbs: 36,
+          fats: 7,
+          fiber: 3,
+        },
+        {
+          name: "لبن الغنم",
+          calories: 95,
+          protein: 5.4,
+          carbs: 5.1,
+          fats: 6,
+          fiber: 0,
+        },
+        {
+          name: "لبن الجاموس",
+          calories: 97,
+          protein: 3.7,
+          carbs: 4.8,
+          fats: 7.9,
+          fiber: 0,
+        },
+        {
+          name: "بيبسي",
+          calories: 150,
+          protein: 0,
+          carbs: 41,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "كوكا كولا",
+          calories: 140,
+          protein: 0,
+          carbs: 39,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "بيبسي دايت",
+          calories: 1,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "راني حبيبات",
+          calories: 180,
+          protein: 0.5,
+          carbs: 45,
+          fats: 0,
+          fiber: 0.2,
+        },
+        {
+          name: "شربت داليا",
+          calories: 160,
+          protein: 0,
+          carbs: 42,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "فانتا برتقال",
+          calories: 160,
+          protein: 0,
+          carbs: 44,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "ديو",
+          calories: 170,
+          protein: 0,
+          carbs: 46,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "سفن اب",
+          calories: 140,
+          protein: 0,
+          carbs: 39,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "الخردل",
+          calories: 66,
+          protein: 3.7,
+          carbs: 5.8,
+          fats: 4.4,
+          fiber: 3.3,
+        },
+        {
+          name: "معجون الطماطم",
+          calories: 82,
+          protein: 4.3,
+          carbs: 18.9,
+          fats: 0.5,
+          fiber: 4.0,
+        },
+        {
+          name: "الكليجة العراقية بالتمر",
+          calories: 300,
+          protein: 5,
+          carbs: 50,
+          fats: 10,
+          fiber: 3,
+        },
+        {
+          name: "الكليجة العراقية بدون تمر",
+          calories: 250,
+          protein: 4,
+          carbs: 45,
+          fats: 8,
+          fiber: 2,
+        },
+        {
+          name: "القلية العراقية",
+          calories: 350,
+          protein: 6,
+          carbs: 60,
+          fats: 12,
+          fiber: 4,
+        },
+        {
+          name: "الصمون العراقي",
+          calories: 290,
+          protein: 9,
+          carbs: 54,
+          fats: 4,
+          fiber: 2,
+        },
+        {
+          name: "الشعرية",
+          calories: 350,
+          protein: 10,
+          carbs: 75,
+          fats: 1.5,
+          fiber: 2,
+        },
+        {
+          name: "الرشدة",
+          calories: 370,
+          protein: 12,
+          carbs: 78,
+          fats: 2,
+          fiber: 3,
+        },
+        {
+          name: "بيض مسلوق بدون صفار",
+          calories: 17,
+          protein: 3.6,
+          carbs: 0.2,
+          fats: 0.1,
+          fiber: 0,
+        },
+        {
+          name: "بيض مسلوق مع الصفار",
+          calories: 77,
+          protein: 6.3,
+          carbs: 0.6,
+          fats: 5.3,
+          fiber: 0,
+        },
+        {
+          name: "لبن البقر",
+          calories: 42,
+          protein: 3.4,
+          carbs: 5,
+          fats: 1,
+          fiber: 0,
+        },
+        {
+          name: "زيتون أخضر",
+          calories: 145,
+          protein: 1,
+          carbs: 3.8,
+          fats: 15.3,
+          fiber: 3.3,
+        },
+        {
+          name: "زيتون أسود",
+          calories: 115,
+          protein: 0.8,
+          carbs: 6.3,
+          fats: 10.7,
+          fiber: 1.6,
+        },
+        {
+          name: "حمص بطحينة",
+          calories: 166,
+          protein: 7.9,
+          carbs: 14.3,
+          fats: 8.6,
+          fiber: 6,
+        },
+        {
+          name: "اللحم بعجين العراقي",
+          calories: 280,
+          protein: 12,
+          carbs: 32,
+          fats: 12,
+          fiber: 2,
+        },
+        {
+          name: "ذرة مطبوخة",
+          calories: 96,
+          protein: 3.4,
+          carbs: 21,
+          fats: 1.5,
+          fiber: 2.4,
+        },
+        {
+          name: "بصل مشوي",
+          calories: 40,
+          protein: 1,
+          carbs: 9,
+          fats: 0.1,
+          fiber: 1.7,
+        },
+        {
+          name: "طماطة مشوية",
+          calories: 22,
+          protein: 1.1,
+          carbs: 4.8,
+          fats: 0.2,
+          fiber: 1.5,
+        },
+        {
+          name: "شربت تانج أكياس تحضير سريع",
+          calories: 80,
+          protein: 0,
+          carbs: 20,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "ملح باليود",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "ملح بدون يود",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        { name: "ماء", calories: 0, protein: 0, carbs: 0, fats: 0, fiber: 0 },
+        {
+          name: "ملح الهمالايا",
+          calories: 0,
+          protein: 0,
+          carbs: 0,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "المكدوس",
+          calories: 150,
+          protein: 4,
+          carbs: 10,
+          fats: 12,
+          fiber: 3,
+        },
+        {
+          name: "الطرشي العادي",
+          calories: 30,
+          protein: 1,
+          carbs: 7,
+          fats: 0,
+          fiber: 2,
+        },
+        {
+          name: "الطرشي المدبس",
+          calories: 50,
+          protein: 1,
+          carbs: 12,
+          fats: 0,
+          fiber: 3,
+        },
+        {
+          name: "دبس الرمان",
+          calories: 220,
+          protein: 0,
+          carbs: 58,
+          fats: 0,
+          fiber: 0,
+        },
+        {
+          name: "اللهانة المكبوسة",
+          calories: 45,
+          protein: 1,
+          carbs: 10,
+          fats: 0,
+          fiber: 3,
+        },
+        {
+          name: "الشوندر",
+          calories: 43,
+          protein: 1.6,
+          carbs: 9.6,
+          fats: 0.2,
+          fiber: 2.4,
+        },
+        {
+          name: "الشلغم المكبوس",
+          calories: 40,
+          protein: 1,
+          carbs: 9,
+          fats: 0,
+          fiber: 3,
+        },
+        {
+          name: "المخللات",
+          calories: 20,
+          protein: 1,
+          carbs: 4,
+          fats: 0,
+          fiber: 1,
+        },
+        {
+          name: "زبدة حيوانية",
+          calories: 717,
+          protein: 0.9,
+          carbs: 0.1,
+          fats: 81,
+          fiber: 0,
+        },
+        {
+          name: "دهن الحر",
+          calories: 898,
+          protein: 0,
+          carbs: 0,
+          fats: 100,
+          fiber: 0,
+        },
+        {
+          name: "زبدة نباتية",
+          calories: 717,
+          protein: 0.1,
+          carbs: 0.1,
+          fats: 81,
+          fiber: 0,
+        },
+        {
+          name: "زبدة نباتية بالكريمة",
+          calories: 735,
+          protein: 0.4,
+          carbs: 1,
+          fats: 82,
+          fiber: 0,
+        },
+        {
+          name: "جبس ليز بالجبنة الفرنسية",
+          calories: 280,
+          protein: 12,
+          carbs: 26,
+          fats: 17,
+          fiber: 1,
+        },
+        {
+          name: "واي بروتين",
+          calories: 100,
+          protein: 20,
+          carbs: 2,
+          fats: 1,
+          fiber: 0,
+        },
+        {
+          name: "ماس بروتين",
+          calories: 120,
+          protein: 24,
+          carbs: 8,
+          fats: 2,
+          fiber: 0,
+        },
+        // إضافة المزيد من الأطعمة حسب الحاجة
+      ];
+
+      function searchFood() {
+        const searchValue = document
+          .getElementById("search")
+          .value.toLowerCase();
+        const searchResults = document.getElementById("searchResults");
+
+        if (searchValue === "") {
+          searchResults.style.display = "none";
+          searchResults.innerHTML = "";
+          return;
+        }
+
+        const filteredFoods = foods.filter((food) =>
+          food.name.includes(searchValue)
+        );
+        searchResults.innerHTML = "";
+
+        filteredFoods.forEach((food) => {
+          const li = document.createElement("li");
+          li.textContent = food.name;
+          li.onclick = function () {
+            document.getElementById("search").value = food.name;
+            searchResults.innerHTML = "";
+            searchResults.style.display = "none";
+          };
+          searchResults.appendChild(li);
         });
 
-        searchResults.style.display = 'block';
-    }
+        searchResults.style.display = "block";
+      }
 
-    function addFood() {
-        const foodName = document.getElementById('search').value;
-        const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+      function addFood() {
+        const foodName = document.getElementById("search").value;
+        const quantity =
+          parseFloat(document.getElementById("quantity").value) || 0;
 
         if (!foodName || quantity <= 0) {
-            alert('يرجى إدخال اسم الطعام وكمية صحيحة.');
-            return;
+          alert("يرجى إدخال اسم الطعام وكمية صحيحة.");
+          return;
         }
 
-        const food = foods.find(f => f.name === foodName);
-        
+        const food = foods.find((f) => f.name === foodName);
+
         if (!food) {
-            alert('الطعام غير موجود.');
-            return;
+          alert("الطعام غير موجود.");
+          return;
         }
 
         selectedFoods.push({ food, quantity });
         updateTable();
-    }
+      }
 
-    function updateTable() {
-        const tbody = document.querySelector('#selectedFoodTable tbody');
-        tbody.innerHTML = '';
+      function updateTable() {
+        const tbody = document.querySelector("#selectedFoodTable tbody");
+        tbody.innerHTML = "";
 
         let totalCalories = 0;
         let totalProtein = 0;
@@ -543,104 +2946,133 @@
         let totalWeight = 0;
 
         selectedFoods.forEach(({ food, quantity }) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${food.name}</td>
-                <td>${quantity}</td>
-                <td>${(food.calories * quantity / 100).toFixed(2)}</td>
-                <td>${(food.protein * quantity / 100).toFixed(2)}</td>
-                <td>${(food.carbs * quantity / 100).toFixed(2)}</td>
-                <td>${(food.fats * quantity / 100).toFixed(2)}</td>
-                <td>${(food.fiber * quantity / 100).toFixed(2)}</td>
-                <td><button class="remove-btn" onclick="removeFood('${food.name}')">حذف</button></td>
-            `;
-            tbody.appendChild(row);
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${food.name}</td>
+            <td>${quantity}</td>
+            <td>${((food.calories * quantity) / 100).toFixed(2)}</td>
+            <td>${((food.protein * quantity) / 100).toFixed(2)}</td>
+            <td>${((food.carbs * quantity) / 100).toFixed(2)}</td>
+            <td>${((food.fats * quantity) / 100).toFixed(2)}</td>
+            <td>${((food.fiber * quantity) / 100).toFixed(2)}</td>
+            <td ><button class="remove-btn" onclick="removeFood('${
+              food.name
+            }')">X</button></td>
+        `;
+          tbody.appendChild(row);
 
-            totalCalories += food.calories * quantity / 100;
-            totalProtein += food.protein * quantity / 100;
-            totalCarbs += food.carbs * quantity / 100;
-            totalFats += food.fats * quantity / 100;
-            totalFiber += food.fiber * quantity / 100;
-            totalWeight += quantity;
+          totalCalories += (food.calories * quantity) / 100;
+          totalProtein += (food.protein * quantity) / 100;
+          totalCarbs += (food.carbs * quantity) / 100;
+          totalFats += (food.fats * quantity) / 100;
+          totalFiber += (food.fiber * quantity) / 100;
+          totalWeight += quantity;
         });
 
-        document.getElementById('totalCalories').textContent = totalCalories.toFixed(2);
-        document.getElementById('totalProtein').textContent = totalProtein.toFixed(2);
-        document.getElementById('totalCarbs').textContent = totalCarbs.toFixed(2);
-        document.getElementById('totalFats').textContent = totalFats.toFixed(2);
-        document.getElementById('totalFiber').textContent = totalFiber.toFixed(2);
-        document.getElementById('totalWeight').textContent = totalWeight;
+        document.getElementById("totalCalories-red").textContent =
+          totalCalories.toFixed(2);
+        document.getElementById("totalProtein").textContent =
+          totalProtein.toFixed(2);
+        document.getElementById("totalCarbs").textContent =
+          totalCarbs.toFixed(2);
+        document.getElementById("totalFats").textContent = totalFats.toFixed(2);
+        document.getElementById("totalFiber").textContent =
+          totalFiber.toFixed(2);
+        document.getElementById("totalWeight").textContent = totalWeight;
 
         checkLimits();
-    }
+      }
 
-    function removeFood(name) {
-        selectedFoods = selectedFoods.filter(item => item.food.name !== name);
+      function removeFood(name) {
+        selectedFoods = selectedFoods.filter((item) => item.food.name !== name);
         updateTable();
-    }
+      }
 
-    function clearTable() {
+      function clearTable() {
         selectedFoods = [];
         updateTable();
-    }
+      }
 
-    function toggleNotes() {
-        const notes = document.getElementById('notes');
-        const notesArrow = document.getElementById('notesArrow');
-        if (notes.style.display === 'none') {
-            notes.style.display = 'block';
-            notesArrow.innerHTML = '&#x25B2;';
+      function toggleNotes() {
+        const notes = document.getElementById("notes");
+        const notesArrow = document.getElementById("notesArrow");
+        if (notes.style.display === "none") {
+          notes.style.display = "block";
+          notesArrow.innerHTML = "&#x25B2;";
         } else {
-            notes.style.display = 'none';
-            notesArrow.innerHTML = '&#x25BC;';
+          notes.style.display = "none";
+          notesArrow.innerHTML = "&#x25BC;";
         }
-    }
+      }
+      function toggleNoteS() {
+        const notes = document.getElementById("Notes");
+        const notesArrow = document.getElementById("notesArrow");
+        if (notes.style.display === "none") {
+          notes.style.display = "block";
+        } else {
+          notes.style.display = "none";
+        }
+      }
 
-    // دالة التحقق من تجاوز الحدود
-    function checkLimits() {
-        const calorieLimit = parseFloat(document.getElementById('calorieLimit').value) || Infinity;
-        const proteinLimit = parseFloat(document.getElementById('proteinLimit').value) || Infinity;
-        const carbLimit = parseFloat(document.getElementById('carbLimit').value) || Infinity;
-        const fatLimit = parseFloat(document.getElementById('fatLimit').value) || Infinity;
-        const fiberLimit = parseFloat(document.getElementById('fiberLimit').value) || Infinity;
+      // دالة التحقق من تجاوز الحدود
+      function checkLimits() {
+        const calorieLimit =
+          parseFloat(document.getElementById("calorieLimit").value) || Infinity;
+        const proteinLimit =
+          parseFloat(document.getElementById("proteinLimit").value) || Infinity;
+        const carbLimit =
+          parseFloat(document.getElementById("carbLimit").value) || Infinity;
+        const fatLimit =
+          parseFloat(document.getElementById("fatLimit").value) || Infinity;
+        const fiberLimit =
+          parseFloat(document.getElementById("fiberLimit").value) || Infinity;
 
-        const totalCalories = parseFloat(document.getElementById('totalCalories').textContent);
-        const totalProtein = parseFloat(document.getElementById('totalProtein').textContent);
-        const totalCarbs = parseFloat(document.getElementById('totalCarbs').textContent);
-        const totalFats = parseFloat(document.getElementById('totalFats').textContent);
-        const totalFiber = parseFloat(document.getElementById('totalFiber').textContent);
+        const totalCalories = parseFloat(
+          document.getElementById("totalCalories").textContent
+        );
+        const totalProtein = parseFloat(
+          document.getElementById("totalProtein").textContent
+        );
+        const totalCarbs = parseFloat(
+          document.getElementById("totalCarbs").textContent
+        );
+        const totalFats = parseFloat(
+          document.getElementById("totalFats").textContent
+        );
+        const totalFiber = parseFloat(
+          document.getElementById("totalFiber").textContent
+        );
 
         if (totalCalories > calorieLimit) {
-            alert('لقد تجاوزت عدد السعرات المطلوب.');
-        } 
-        if (totalProtein > proteinLimit) {
-            alert('لقد تجاوزت غرامات البروتين المطلوب.');
-        } 
-        if (totalCarbs > carbLimit) {
-            alert('لقد تجاوزت غرامات الكارب المطلوب.');
-        } 
-        if (totalFats > fatLimit) {
-            alert('لقد تجاوزت غرامات الدهون المطلوب.');
-        } 
-        if (totalFiber > fiberLimit) {
-            alert('لقد تجاوزت غرامات الألياف المطلوب.');
+          alert("لقد تجاوزت عدد السعرات المطلوب.");
         }
-    }
+        if (totalProtein > proteinLimit) {
+          alert("لقد تجاوزت غرامات البروتين المطلوب.");
+        }
+        if (totalCarbs > carbLimit) {
+          alert("لقد تجاوزت غرامات الكارب المطلوب.");
+        }
+        if (totalFats > fatLimit) {
+          alert("لقد تجاوزت غرامات الدهون المطلوب.");
+        }
+        if (totalFiber > fiberLimit) {
+          alert("لقد تجاوزت غرامات الألياف المطلوب.");
+        }
+      }
 
-    // دالة لتصفير الاحتياج
-    function resetLimits() {
-        document.getElementById('calorieLimit').value = '';
-        document.getElementById('proteinLimit').value = '';
-        document.getElementById('carbLimit').value = '';
-        document.getElementById('fatLimit').value = '';
-        document.getElementById('fiberLimit').value = '';
-    }
+      // دالة لتصفير الاحتياج
+      function resetLimits() {
+        document.getElementById("calorieLimit").value = "";
+        document.getElementById("proteinLimit").value = "";
+        document.getElementById("carbLimit").value = "";
+        document.getElementById("fatLimit").value = "";
+        document.getElementById("fiberLimit").value = "";
+      }
 
-    // دالة لمسح خانة البحث
-    function clearSearch() {
-        document.getElementById('search').value = '';
-    }
-</script>
-
-</body>
+      // دالة لمسح خانة البحث
+      function clearSearch() {
+        document.getElementById("search").value = "";
+      }
+    </script>
+  </body>
 </html>
