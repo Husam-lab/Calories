@@ -5,7 +5,7 @@
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#4CAF50",
-    "description": "حاسبة السعرات.",
+    "description": "حاسبة السعرات والأطعمة.",
     "icons": [
         {
             "src": "./Apple.png",
