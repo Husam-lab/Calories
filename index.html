@@ -334,6 +334,8 @@ _________________________________________________
       <input
         type="number"
         id="weight"
+        pattern="[0-9]*"
+        inputmode="decimal"
         placeholder="أدخل وزنك بالكيلوغرام"
         required
       /><br />
@@ -342,6 +344,8 @@ _________________________________________________
       <input
         type="number"
         id="calorie_deficit"
+                pattern="[0-9]*"
+        inputmode="decimal"
         placeholder="أدخل العجز (لانقاص الوزن)"
       /><br />
 
@@ -349,6 +353,8 @@ _________________________________________________
       <input
         type="number"
         id="calorie_surplus"
+                pattern="[0-9]*"
+        inputmode="decimal"
         placeholder="أدخل الزيادة (لزيادة الوزن)"
       /><br />
 
@@ -356,6 +362,8 @@ _________________________________________________
       <input
         type="number"
         id="waist"
+                pattern="[0-9]*"
+        inputmode="decimal"
         placeholder="أدخل محيط خصرك"
         required
       /><br />
@@ -365,17 +373,22 @@ _________________________________________________
         type="number"
         id="neck"
         placeholder="أدخل محيط رقبتك"
+                pattern="[0-9]*"
+        inputmode="decimal"
         required
       /><br />
 
       <label for="height">ادخل الطول (بالسنتيمتر):</label>
-      <input type="number" id="height" placeholder="أدخل طولك" required /><br />
+      <input type="number" id="height" placeholder="أدخل طولك"         pattern="[0-9]*"
+        inputmode="decimal" required /><br />
 
       <div id="hipMeasurementContainer" style="display: none">
         <label for="hip">ادخلي محيط المؤخرة (بالسنتيمتر):</label>
         <input
           type="number"
           id="hip"
+                  pattern="[0-9]*"
+        inputmode="decimal"
           placeholder="أدخل محيط المؤخرة"
           required
         /><br />
@@ -485,6 +498,8 @@ _________________________________________________
               <input
                 type="number"
                 id="calorieLimit"
+                        pattern="[0-9]*"
+        inputmode="decimal"
                 placeholder="السعرات"
                 min="0"
               />
@@ -493,6 +508,8 @@ _________________________________________________
               <input
                 type="number"
                 id="proteinLimit"
+                        pattern="[0-9]*"
+        inputmode="decimal"
                 placeholder="البروتين"
                 min="0"
               />
@@ -501,16 +518,21 @@ _________________________________________________
               <input
                 type="number"
                 id="carbLimit"
+                        pattern="[0-9]*"
+        inputmode="decimal"
                 placeholder="الكارب"
                 min="0"
               />
             </td>
             <td>
-              <input type="number" id="fatLimit" placeholder="الدهون" min="0" />
+              <input type="number" id="fatLimit" placeholder="الدهون"         pattern="[0-9]*"
+        inputmode="decimal" min="0" />
             </td>
             <td>
               <input
                 type="number"
+                        pattern="[0-9]*"
+        inputmode="decimal"
                 id="fiberLimit"
                 placeholder="الألياف"
                 min="0"
@@ -537,6 +559,8 @@ _________________________________________________
         type="number"
         id="quantity"
         value="100"
+                pattern="[0-9]*"
+        inputmode="decimal"
         min="1"
         style="width: 30%"
       />
