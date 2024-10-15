@@ -330,17 +330,17 @@ _________________________________________________
         <option value="أنثى">أنثى</option></select
       ><br />
 
-      <label for="weight">ادخل الوزن (بالكيلوغرام):</label>
+      <label for="weight">ادخل الوزن (كغم):</label>
       <input
         type="number"
         id="weight"
         pattern="[0-9]*"
         inputmode="decimal"
-        placeholder="أدخل وزنك بالكيلوغرام"
+        placeholder="أدخل وزنك (بالكيلوغرام)"
         required
       /><br />
 
-      <label for="calorie_deficit">ادخل عجز السعرات الحرارية ( اختياري ):</label>
+      <label for="calorie_deficit"> عجز السعرات  ( اختياري ):</label>
       <input
         type="number"
         id="calorie_deficit"
@@ -349,16 +349,16 @@ _________________________________________________
         placeholder="أدخل العجز (لانقاص الوزن)"
       /><br />
 
-      <label for="calorie_surplus">ادخل زيادة السعرات الحرارية ( اختياري )  :</label>
+      <label for="calorie_surplus"> زيادة السعرات ( اختياري )  :</label>
       <input
         type="number"
         id="calorie_surplus"
                 pattern="[0-9]*"
         inputmode="decimal"
-        placeholder="أدخل الزيادة (لزيادة الوزن)"
+        placeholder=" ادخل الزيادة (لزيادة الوزن)"
       /><br />
 
-      <label for="waist">ادخل محيط الخصر (بالسنتيمتر):</label>
+      <label for="waist"> محيط الخصر (سم):</label>
       <input
         type="number"
         id="waist"
@@ -368,7 +368,7 @@ _________________________________________________
         required
       /><br />
 
-      <label for="neck">ادخل محيط الرقبة (بالسنتيمتر):</label>
+      <label for="neck"> محيط الرقبة (سم):</label>
       <input
         type="number"
         id="neck"
@@ -378,34 +378,34 @@ _________________________________________________
         required
       /><br />
 
-      <label for="height">ادخل الطول (بالسنتيمتر):</label>
+      <label for="height"> الطول (سم):</label>
       <input type="number" id="height" placeholder="أدخل طولك"         pattern="[0-9]*"
         inputmode="decimal" required /><br />
 
       <div id="hipMeasurementContainer" style="display: none">
-        <label for="hip">ادخلي محيط المؤخرة (بالسنتيمتر):</label>
+        <label for="hip"> محيط المؤخرة (سم):</label>
         <input
           type="number"
           id="hip"
                   pattern="[0-9]*"
         inputmode="decimal"
-          placeholder="أدخل محيط المؤخرة"
+          placeholder="أدخلي محيط المؤخرة"
           required
         /><br />
       </div>
 
       <div class="buttons">
-        <button id="calculate" onclick="calculateCalories()">أحسب السعرات والأحتياج ونسبة دهون الجسم</button>
-        <button id="reset" onclick="resetForm()">تصفير الحسابات</button>
+        <button id="calculate" onclick="calculateCalories()">أحسب</button>
+        <button id="reset" onclick="resetForm()">تصفير</button>
       </div>
 
       <div class="result" id="result">
-        <p>محصلة السعرات: <span id="totalCalories"></span> سعرة حرارية</p>
-        <p>احتياجك للكربوهيدرات: <span id="carbs"></span> غرام</p>
-        <p>احتياجك للبروتينات: <span id="proteins"></span> غرام</p>
-        <p>احتياجك للدهون: <span id="fats"></span> غرام</p>
-        <p>نسبة الدهون في جسمك: <span id="bodyFatPercentage"></span>%</p>
-      </div>
+    <p style="color: #ADD8E6;">محصلة السعرات: <span id="totalCalories"></span> سعرة حرارية</p>
+    <p style="color: #90EE90;">احتياجك للكاربوهيدرات: <span id="carbs"></span> غرام</p>
+    <p style="color: #90EE90;">احتياجك للبروتينات: <span id="proteins"></span> غرام</p>
+    <p style="color: #90EE90;">احتياجك للدهون: <span id="fats"></span> غرام</p>
+    <p style="color: #FFFFFF;">نسبة الدهون في جسمك: <span id="bodyFatPercentage"></span>%</p>
+</div>
       <button type="button" class="collapsible">انقر هنا للملاحظات حول حاسبة السعرات : </button>
       <div class="content">
         <div id="Notes">
