@@ -692,11 +692,10 @@ _________________________________________________
         let totalCalories = Math.round(bmr + calorieSurplus - calorieDeficit); // محصلة السعرات
 
         // حساب النسب الغذائية
-        let carbs = Math.round(totalCalories / 8); // احتياج الكربوهيدرات
-        let proteins = Math.round(totalCalories / 13); // احتياج البروتينات
-        let fats = Math.round(totalCalories / 48); // احتياج الدهون
-
-        // حساب نسبة الدهون في الجسم باستخدام معادلة البحرية الأمريكية
+        let carbs = Math.round(totalCalories / 4)*(45/100); // احتياج الكربوهيدرات
+        let proteins = Math.round(totalCalories / 4)*(30/100); // احتياج البروتينات
+        let fats = Math.round(totalCalories / 9)*(25/100); // احتياج الدهون
+        // احتياج الدهون حساب نسبة الدهون في الجسم باستخدام معادلة البحرية الأمريكية
         let bodyFatPercentage;
         if (gender === "ذكر") {
           bodyFatPercentage = (
