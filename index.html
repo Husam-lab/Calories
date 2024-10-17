@@ -2,7 +2,7 @@
 <html lang="ar">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>حاسبة السعرات</title>
     <link rel="manifest" href="manifest.json">
     <!-- أيقونة favicon -->
@@ -40,6 +40,7 @@ h1,
 input[type="text"],
 input[type="number"],
 select {
+    -webkit-text-size-adjust: 120% !important; /* منع تكبير الخط */
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -49,7 +50,7 @@ select {
     border-radius: 5px;
     box-sizing: border-box;
     text-align: center;
-    font-size: 18px; /* حجم الخط العادي (المكتوب) */
+    font-size: 14px !important; /* حجم الخط العادي (المكتوب) */
     transition: border-color 0.3s ease; /* إضافة انتقال لتغيير الحدود */
 }
 
@@ -342,25 +343,6 @@ _________ <img src="https://cdn-icons-png.flaticon.com/512/6750/6750848.png" alt
         placeholder="أدخل وزنك (بالكيلوغرام)"
         required
       /><br />
-
-      <label for="calorie_deficit"> عجز السعرات  ( اختياري ):</label>
-      <input
-        type="number"
-        id="calorie_deficit"
-                pattern="[0-9]*"
-        inputmode="decimal"
-        placeholder="أدخل العجز (لانقاص الوزن)"
-      /><br />
-
-      <label for="calorie_surplus"> زيادة السعرات ( اختياري )  :</label>
-      <input
-        type="number"
-        id="calorie_surplus"
-                pattern="[0-9]*"
-        inputmode="decimal"
-        placeholder=" ادخل الزيادة (لزيادة الوزن)"
-      /><br />
-
       <label for="waist"> محيط الخصر (سم):</label>
       <input
         type="number"
@@ -384,6 +366,24 @@ _________ <img src="https://cdn-icons-png.flaticon.com/512/6750/6750848.png" alt
       <label for="height"> الطول (سم):</label>
       <input type="number" id="height" placeholder="أدخل طولك"         pattern="[0-9]*"
         inputmode="decimal" required /><br />
+                    <label for="calorie_deficit"> عجز السعرات  ( اختياري ):</label>
+      <input
+        type="number"
+        id="calorie_deficit"
+                pattern="[0-9]*"
+        inputmode="decimal"
+        placeholder="أدخل العجز (لانقاص الوزن)"
+      /><br />
+
+      <label for="calorie_surplus"> زيادة السعرات ( اختياري )  :</label>
+      <input
+        type="number"
+        id="calorie_surplus"
+                pattern="[0-9]*"
+        inputmode="decimal"
+        placeholder=" ادخل الزيادة (لزيادة الوزن)"
+      /><br />
+
 
       <div id="hipMeasurementContainer" style="display: none">
         <label for="hip"> محيط المؤخرة (سم):</label>
@@ -395,6 +395,7 @@ _________ <img src="https://cdn-icons-png.flaticon.com/512/6750/6750848.png" alt
           placeholder="أدخلي محيط المؤخرة"
           required
         /><br />
+
       </div>
 
       <div class="buttons">
