@@ -402,10 +402,15 @@ _________ <img src="https://cdn-icons-png.flaticon.com/512/6750/6750848.png" alt
         </select>
 
         <div class="input-container">
-            <input type="number" id="weight" placeholder=" "    min="1" step="0.1" inputmode="decimal" required>
+            <input type="number" id="weight" placeholder=" "    min="1" step="0.1" inputmode="decimal" oninput="convertKgToLbs()" required>
             <label for="weight">أكتب الوزن (كغم)</label>
         </div>
 
+        <div class="input-container">
+            <input type="number" id="lbs" placeholder=" "    min="1" step="0.1" inputmode="decimal" oninput="convertLbsToKg()" required>
+            <label for="lbs">أو أكتب الوزن (رطل)</label>
+        </div>
+        
         <div class="input-container">
             <input type="number" id="height" placeholder=" "    min="1" step="0.1" inputmode="decimal" required>
             <label for="height">أكتب الطول (سم)</label>
@@ -741,6 +746,7 @@ function calculate() {
 }
       function reset() {
     document.getElementById("weight").value = '';
+            document.getElementById("lbs").value = '';
     document.getElementById("height").value = '';
     document.getElementById("waist").value = '';
     document.getElementById("neck").value = '';
@@ -1285,6 +1291,34 @@ console.log(totalCalories, calorieLimit)
             document.getElementById("search").value = "";
             // مسح حقل الكمية
             document.getElementById("quantity").value = "";
+        }
+          function convertKgToLbs() {
+            let kg = document.getElementById("kg").value;
+            if (kg !== "") {
+                let lbs = kg * 2.20462;
+                document.getElementById("lbs").value = lbs.toFixed(2);
+            } else {
+                document.getElementById("lbs").value = "";
+            }
+        }
+        function convertKgToLbs() {
+            let weight = document.getElementById("weight").value;
+            if (weight !== "") {
+                let lbs = weight * 2.20462;
+                document.getElementById("lbs").value = lbs.toFixed(2);
+            } else {
+                document.getElementById("lbs").value = "";
+            }
+        }
+
+        function convertLbsToKg() {
+            let lbs = document.getElementById("lbs").value;
+            if (lbs !== "") {
+                let weight = lbs / 2.20462;
+                document.getElementById("weight").value = kg.toFixed(2);
+            } else {
+                document.getElementById("weight").value = "";
+            }
         }
     </script>
   </body>
