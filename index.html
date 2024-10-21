@@ -1305,7 +1305,7 @@ console.log(totalCalories, calorieLimit)
             let weight = document.getElementById("weight").value;
             if (weight !== "") {
                 let lbs = weight * 2.20462;
-                document.getElementById("lbs").value = lbs.toFixed(2);
+                document.getElementById("lbs").value = lbs.toFixed(1);
             } else {
                 document.getElementById("lbs").value = "";
             }
@@ -1315,7 +1315,7 @@ console.log(totalCalories, calorieLimit)
             let lbs = document.getElementById("lbs").value;
             if (lbs !== "") {
                 let weight = lbs / 2.20462;
-                document.getElementById("weight").value = kg.toFixed(2);
+                document.getElementById("weight").value = weight.toFixed(1);
             } else {
                 document.getElementById("weight").value = "";
             }
