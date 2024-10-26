@@ -170,32 +170,6 @@ select {
         color: white;
         text-align: center;
       }
-
-      .notes {
-        color: white;
-        font-size: 14px;
-        margin-top: 20px;
-        background-color: black;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        text-align: center;
-        display: none;
-      }
-
-      .notes u {
-        font-weight: bold;
-      }
-
-      .toggle-notes {
-         cursor: pointer;
-         background-color: gray; padding: 10px;
-         border: none;
-         outline: none;
-         text-align: center;
-         font-size: 16px;
-         color: #FFD700;
-      }
       /* New wrapper for scrollable table */
       .table-wrapper {
         width: 100%;
@@ -652,7 +626,7 @@ _________ <img src="https://cdn-icons-png.flaticon.com/512/6750/6750848.png" alt
       <!-- ملاحظات -->
       <button type="button" class="collapsible">أنقر هنا للملاحظات حول حساب أصناف الطعام : </button>
       <div class="content">
-        <div id="Notes">
+          <div id="Notes">
      <p>
           • القيم المكتوبة في هذا البرنامج هي قيم تقريبية وممكن ان تختلف قليلاً
           وتختلف ايضاً الوجبات بطريقة التحضير والمواد المضافة
@@ -790,7 +764,7 @@ function calculate() {
 }
       function reset() {
     document.getElementById("weight").value = '';
-            document.getElementById("lbs").value = '';
+    document.getElementById("lbs").value = '';
     document.getElementById("height").value = '';
     document.getElementById("waist").value = '';
     document.getElementById("neck").value = '';
@@ -1267,16 +1241,6 @@ function diagnose(bodyFatPercentage, gender) {
       function clearTable() {
         selectedFoods = [];
         updateTable();
-      }
-
-      function toggleNoteS() {
-        const notes = document.getElementById("Notes");
-        const notesArrow = document.getElementById("notesArrow");
-        if (notes.style.display === "none") {
-          notes.style.display = "block";
-        } else {
-          notes.style.display = "none";
-        }
       }
 
       // دالة التحقق من تجاوز الحدود
