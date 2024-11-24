@@ -833,7 +833,7 @@ function calculate() {
         }
 
         function calculateMacros(targetCalories, weight) {
-            const protein = (2 * weight);
+            const protein = (1.8 * weight);
             let fats = (0.3 * targetCalories) / 9;
             let carbs = (targetCalories - (protein * 4 + fats * 9)) / 4;
             return { protein, fats, carbs };
